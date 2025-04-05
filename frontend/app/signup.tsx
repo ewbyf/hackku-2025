@@ -2,9 +2,10 @@ import { Link, useRouter } from 'expo-router';
 import { login } from '../lib/auth';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { StyleSheet, TouchableOpacity, View, Text, TextInput, SafeAreaView, Button } from 'react-native';
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import BackArrow from '@/components/BackArrow';
 import api from '@/lib/axiosConfig';
+import { global } from '@/lib/context';
 
 export default function SignUp() {
 	const router = useRouter();
@@ -13,6 +14,8 @@ export default function SignUp() {
 	const [password, setPassword] = useState('');
 	const [confirmPassword, setConfirmPassword] = useState('');
 
+	const { updateUser } = useContext(global);
+
 	const handleSignUp = async () => {
 		if (password == confirmPassword) {
 			api.post('/register', {
@@ -20,8 +23,11 @@ export default function SignUp() {
 				email,
 				password,
 			})
-				.then((resp) => {
-					console.log(resp);
+				.then((res) => {
+					const data = res.data;
+
+					login(data.token);
+					updateUser();
 					router.replace('/home');
 				})
 				.catch((err) => {

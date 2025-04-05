@@ -3,48 +3,80 @@ import Sun from 'react-native-vector-icons/Ionicons';
 import Fork from 'react-native-vector-icons/Ionicons';
 import Moon from 'react-native-vector-icons/Ionicons';
 import Icon from 'react-native-vector-icons/Ionicons';
+import { Prescription } from '@/lib/context';
+import React from 'react';
 
-interface Props {
-	name: string;
-	description: string;
-	takeDuring: string;
-	interval: string;
-	timestamp: Date;
-	type: string;
-}
-
-const MedicineCard = ({ name, description, takeDuring, interval, timestamp }: Props) => {
-    const takeMed = () => {
-
-    }
+const MedicineCard = ({ prescription }: { prescription: Prescription }) => {
+	const takeMed = () => {
+        
+    };
 
 	return (
 		<TouchableOpacity style={styles.container}>
 			<View style={{ justifyContent: 'space-between', gap: 10 }}>
 				<View>
-					<Text style={styles.name}>{name}</Text>
-					<Text style={styles.description}>{description}</Text>
+					<Text style={styles.name} numberOfLines={2}>{prescription.medication}</Text>
+					{/* <Text style={styles.description}>{prescription.de}</Text> */}
 				</View>
-				<View style={{gap: 3}}>
+				<View style={{ gap: 3 }}>
 					<Text style={styles.take}>TAKE DURING</Text>
 					<View style={{ flexDirection: 'row', gap: 5 }}>
-						<Sun name="sunny" color={'white'} size={32} style={takeDuring === 'morning' ? styles.sunActive : styles.emojiInactive}></Sun>
-						<Fork name="restaurant" color={'yellow'} size={32} style={takeDuring === 'meal' ? styles.mealActive : styles.emojiInactive}></Fork>
-						<Moon name="moon" color={'white'} size={32} style={takeDuring === 'Night' ? styles.moonActive : styles.emojiInactive}></Moon>
+						<Sun
+							name="sunny"
+							color={'white'}
+							size={32}
+							style={prescription.medication === 'morning' ? styles.sunActive : styles.emojiInactive}
+						></Sun>
+						<Fork
+							name="restaurant"
+							color={'yellow'}
+							size={32}
+							style={prescription.medication === 'meal' ? styles.mealActive : styles.emojiInactive}
+						></Fork>
+						<Moon
+							name="moon"
+							color={'white'}
+							size={32}
+							style={prescription.medication === 'night' ? styles.moonActive : styles.emojiInactive}
+						></Moon>
 					</View>
 				</View>
 			</View>
 			<View style={{ justifyContent: 'space-between', gap: 10 }}>
-				<Text style={styles.interval}>Every 4 hours</Text>
-				<TouchableOpacity style={styles.btn} onPress={takeMed}>
-					<Text style={styles.btnText}>I've taken it</Text>
-					<View style={styles.circle}></View>
-					{/* <Icon name="checkmark" size={32} style={{ position: 'absolute', right: 8, borderColor: 'black' }} color={'#3BC23B'}></Icon> */}
-				</TouchableOpacity>
-				<View style={{ flexDirection: 'row', gap: 3, alignItems: 'center', alignSelf: 'flex-end' }}>
-					<Text style={styles.status}>Ready to be taken</Text>
-					<Icon name="checkmark" size={16} color={'#3BC23B'}></Icon>
-				</View>
+				<Text style={styles.interval}>
+					Every {prescription.period} {prescription.periodUnit === 'h' ? 'hour(s)' : 'day(s)'}
+				</Text>
+
+				{prescription.lastTaken === null ||
+				Date.now() - new Date(prescription.lastTaken).valueOf() >=
+					(prescription.period * ((prescription.periodUnit == 'h' ? 3600 : 3600 * 24) * 1000)) / prescription.freq ? (
+					<>
+						<TouchableOpacity style={styles.btn} onPress={takeMed}>
+							<Text style={styles.btnText}>I've taken it</Text>
+							<View style={styles.circle}></View>
+							{/* <Icon name="checkmark" size={32} style={{ position: 'absolute', right: 8, borderColor: 'black' }} color={'#3BC23B'}></Icon> */}
+						</TouchableOpacity>
+						<View style={{ flexDirection: 'row', gap: 3, alignItems: 'center', alignSelf: 'flex-end' }}>
+							<Text style={styles.status}>Ready to be taken</Text>
+							<Icon name="checkmark" size={16} color={'#3BC23B'}></Icon>
+						</View>
+					</>
+				) : (
+					<>
+						<TouchableOpacity style={styles.btn} onPress={takeMed}>
+							<Text style={styles.btnText}>I've taken it</Text>
+							<View style={styles.circle}></View>
+							{/* <Icon name="checkmark" size={32} style={{ position: 'absolute', right: 8, borderColor: 'black' }} color={'#3BC23B'}></Icon> */}
+						</TouchableOpacity>
+						<View style={{ flexDirection: 'row', gap: 3, alignItems: 'center', alignSelf: 'flex-end' }}>
+							<Text style={styles.status}>Ready to be taken</Text>
+							
+						</View>
+                        <View style={styles.progress}>
+                            <View style={styles.innerProgress}></View>
+                        </View>
+					</>
+				)}
 			</View>
 		</TouchableOpacity>
 	);
@@ -66,7 +98,8 @@ const styles = StyleSheet.create({
 	},
 	name: {
 		fontFamily: 'SourceSemibold',
-		fontSize: 26,
+		fontSize: 20,
+        maxWidth: 150
 	},
 	description: {
 		fontFamily: 'Source',
@@ -94,7 +127,7 @@ const styles = StyleSheet.create({
 		color: '#6C63FF',
 		backgroundColor: '#E2E0FF',
 		paddingHorizontal: 12,
-        paddingVertical: 2,
+		paddingVertical: 2,
 		borderRadius: 10,
 		alignSelf: 'flex-end',
 	},
@@ -125,4 +158,18 @@ const styles = StyleSheet.create({
 		alignItems: 'center',
 		overflow: 'visible',
 	},
+    progress: {
+        height: 1,
+        width: '100%',
+        backgroundColor: '#E2E0FF',
+        borderRadius: 10,
+    },
+    innerProgress: {
+        height: 1,
+        width: '100%',
+        backgroundColor: '#E2E0FF',
+        borderRadius: 10,
+        position: 'absolute',
+        left: 0
+    }
 });

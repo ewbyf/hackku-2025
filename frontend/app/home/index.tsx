@@ -4,29 +4,29 @@ import { StyleSheet, TouchableOpacity, View, Text, TextInput, SafeAreaView, Butt
 import TopBar from '@/components/TopBar';
 import Title from '@/components/Title';
 import MedicineCard from '@/components/MedicineCard';
-import React from 'react';
+import React, { useContext } from 'react';
 import BGSvg from '@/components/svgs/BG';
 import { BlurView } from 'expo-blur';
+import { global } from '@/lib/context';
 
 export default function Home() {
 	const router = useRouter();
+
+	const { user } = useContext(global);
 
 	return (
 		<>
 			<ImageBackground source={require('../../assets/images/bg.png')} imageStyle={{ resizeMode: 'cover' }} style={{ height: '100%', width: '100%' }}>
 				<SafeAreaView style={styles.container}>
 					<TopBar />
-					<KeyboardAwareScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ flex: 1, padding: 20 }}>
+					<KeyboardAwareScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ padding: 20, paddingBottom: 80 }}>
 						<Title>Today</Title>
+                        <View style={{gap: 20}}>
 
-						<MedicineCard
-							name="Drug name"
-							description="blah blah blah..."
-							takeDuring="Night"
-							timestamp={new Date()}
-							interval="Every 4 days"
-							type="Liquid"
-						/>
+						{user?.prescriptions.map((prescription) => (
+                            <MedicineCard key={prescription.medication} prescription={prescription} />
+						))}
+                        </View>
 					</KeyboardAwareScrollView>
 				</SafeAreaView>
 			</ImageBackground>
