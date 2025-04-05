@@ -3,6 +3,7 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import { StyleSheet, TouchableOpacity, View, Text, TextInput, SafeAreaView, Button } from 'react-native';
 import TopBar from '@/components/TopBar';
 import Title from '@/components/Title';
+import MedicineCard from '@/components/MedicineCard';
 
 export default function Home() {
     const router = useRouter();
@@ -13,6 +14,7 @@ export default function Home() {
             <KeyboardAwareScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ flex: 1, padding: 30 }}>
                 <Title>Today</Title>
                 <Text>Login</Text>
+                <MedicineCard/>
             </KeyboardAwareScrollView>
         </SafeAreaView>
     );
