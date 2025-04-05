@@ -5,7 +5,7 @@ import { global } from '@/lib/context';
 import { useRouter } from 'expo-router';
 import { DateTime } from 'luxon';
 import React, { useContext, useEffect, useState } from 'react';
-import { ImageBackground, SafeAreaView, StyleSheet, View } from 'react-native';
+import { ImageBackground, SafeAreaView, StyleSheet, View, Text } from 'react-native';
 import calendar from 'react-native-calendar-events';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
@@ -17,7 +17,7 @@ export default function Home() {
 
 	useEffect(() => {
 		(async () => {
-			const events = await calendar.fetchAllEvents(DateTime.now().toISODate(), DateTime.now().plus({ days: 7 }).toISODate());
+			const events = await calendar.fetchAllEvents(DateTime.now().toISODate(), DateTime.now().plus({ days: 30 }).toISODate());
 
 			setHasEvent(
 				events.some((evt) =>
@@ -36,6 +36,7 @@ export default function Home() {
 		<ImageBackground source={require('../../assets/images/bg.png')} imageStyle={{ resizeMode: 'cover' }} style={{ height: '100%', width: '100%' }}>
 			<SafeAreaView style={styles.container}>
 				<TopBar />
+				<Text>{hasEvent}</Text>
 				<KeyboardAwareScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ padding: 20, paddingBottom: 80 }}>
 					<Title>Today</Title>
 					<View style={{ gap: 20 }}>
