@@ -4,9 +4,8 @@ export default function HomeLayout() {
 	return (
 		<Tabs screenOptions={{ headerShown: false }}>
 			<Tabs.Screen name="index" options={{ title: 'Home' }} />
-			<Tabs.Screen name="history" options={{ title: 'History' }} />
-			<Tabs.Screen name="map" options={{ title: 'Map' }} />
-			<Tabs.Screen name="documents" options={{ title: 'Documents' }} />
+			<Tabs.Screen name="history" options={{ title: 'Journey' }} />
+			<Tabs.Screen name="documents" options={{ title: 'Records' }} />
 		</Tabs>
 	);
 }
