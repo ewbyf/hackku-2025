@@ -39,8 +39,8 @@ export default function Home() {
 				<KeyboardAwareScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ padding: 20, paddingBottom: 80 }}>
 					<Title>Today</Title>
 					<View style={{ gap: 20 }}>
-						{user?.prescriptions.map((prescription) => (
-							<MedicineCard key={prescription.medication} prescription={prescription} />
+						{user?.prescriptions.map((prescription, i) => (
+							<MedicineCard key={i} prescription={prescription} />
 						))}
 					</View>
 				</KeyboardAwareScrollView>
@@ -52,12 +52,11 @@ export default function Home() {
 const styles = StyleSheet.create({
 	container: {
 		display: 'flex',
-		flex: 1
+		flex: 1,
 	},
 	blurContainer: {
 		padding: 20,
 		borderRadius: 10,
-		overflow: 'hidden'
-	}
+		overflow: 'hidden',
+	},
 });
-

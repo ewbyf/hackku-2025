@@ -6,6 +6,8 @@ import { useContext, useState } from 'react';
 import { SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { global } from '@/lib/context';
+import SignIn from '@/components/svgs/SignIn';
+import React from 'react';
 
 export default function Login() {
 	const router = useRouter();
@@ -32,50 +34,55 @@ export default function Login() {
 	};
 
 	return (
-		<SafeAreaView style={styles.container}>
-			<KeyboardAwareScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ flex: 1, padding: 30 }}>
-				<BackArrow />
-				<View style={{ gap: 50, justifyContent: 'flex-end', height: '100%' }}>
-					<Text style={styles.title}>Let's get you signed in</Text>
-					<View style={{ gap: 20 }}>
-						<View style={{ gap: 5 }}>
-							<Text style={styles.label}>EMAIL ADDRESS</Text>
-							<TextInput
-								style={[styles.input]}
-								placeholder="Enter your email address..."
-								placeholderTextColor={'white'}
-								onChangeText={(e) => {
-									setEmail(e);
-								}}
-								value={email}
-							></TextInput>
+		<>
+			<BackArrow />
+
+			<View style={styles.container}>
+				<KeyboardAwareScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ flex: 1, padding: 30 }}>
+					{' '}
+					<SignIn style={{ position: 'absolute', zIndex: 10 }} height={375} />
+					<View style={{ gap: 20, justifyContent: 'flex-end', height: '100%' }}>
+						<Text style={styles.title}>Let's get you signed in</Text>
+						<View style={{ gap: 20 }}>
+							<View style={{ gap: 5 }}>
+								<Text style={styles.label}>EMAIL ADDRESS</Text>
+								<TextInput
+									style={[styles.input]}
+									placeholder="Enter your email address..."
+									placeholderTextColor={'white'}
+									onChangeText={(e) => {
+										setEmail(e);
+									}}
+									value={email}
+								></TextInput>
+							</View>
+							<View style={{ gap: 5 }}>
+								<Text style={styles.label}>PASSWORD</Text>
+								<TextInput
+									style={[styles.input]}
+									placeholder="Enter your password..."
+									placeholderTextColor={'white'}
+									onChangeText={(e) => {
+										setPassword(e);
+									}}
+									value={password}
+									secureTextEntry={true}
+								></TextInput>
+							</View>
+							<TouchableOpacity style={styles.btn} onPress={handleLogin}>
+								<Text style={styles.btnText}>Sign in</Text>
+							</TouchableOpacity>
+							<Text style={styles.swapLabel}>
+								Don't have an account?{' '}
+								<Link style={{ color: 'white', textDecorationLine: 'underline', fontFamily: 'SourceBold' }} href="/signup">
+									Sign up
+								</Link>
+							</Text>
 						</View>
-						<View style={{ gap: 5 }}>
-							<Text style={styles.label}>PASSWORD</Text>
-							<TextInput
-								style={[styles.input]}
-								placeholder="Enter your password..."
-								placeholderTextColor={'white'}
-								onChangeText={(e) => {
-									setPassword(e);
-								}}
-								value={password}
-								secureTextEntry={true}
-							></TextInput>
-						</View>
-						<TouchableOpacity style={styles.btn} onPress={handleLogin}>
-							<Text style={styles.btnText}>Sign in</Text>
-						</TouchableOpacity>
-						<Text style={styles.swapLabel}>
-							Don't have an account?{' '}
-							<Link style={{ color: 'white', textDecorationLine: 'underline', fontFamily: 'SourceBold' }} href="/signup">
-								Sign up
-							</Link>
-						</Text>
 					</View>
-				</View>
-			</KeyboardAwareScrollView>
-		</SafeAreaView>
+				</KeyboardAwareScrollView>
+			</View>
+		</>
 	);
 }
 
@@ -84,6 +91,7 @@ const styles = StyleSheet.create({
 		display: 'flex',
 		flex: 1,
 		backgroundColor: '#6C63FF',
+		paddingBottom: 30,
 	},
 	title: {
 		fontFamily: 'SourceBold',

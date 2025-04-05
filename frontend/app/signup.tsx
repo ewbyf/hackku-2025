@@ -30,7 +30,7 @@ export default function SignUp() {
 
 					login(data.token);
 					updateUser();
-					router.replace('/home');
+					router.replace('/home'); // TODO: change to put this above everything but we make it route to onboarding
 				})
 				.catch((err) => {
 					console.log(err);
@@ -41,9 +41,10 @@ export default function SignUp() {
 	return (
 		<>
 			<BackArrow />
-			<SignUpSvg style={{ position: 'absolute', zIndex: 1 }} height={275} />
-			<SafeAreaView style={styles.container}>
+
+			<View style={styles.container}>
 				<KeyboardAwareScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ flex: 1, padding: 30 }}>
+					<SignUpSvg style={{ position: 'absolute', zIndex: 1 }} height={275} />
 					<View style={{ gap: 20, justifyContent: 'flex-end', height: '100%' }}>
 						<Text style={styles.title}>Let's create an account</Text>
 						<View style={{ gap: 20 }}>
@@ -110,7 +111,7 @@ export default function SignUp() {
 						</View>
 					</View>
 				</KeyboardAwareScrollView>
-			</SafeAreaView>
+			</View>
 		</>
 	);
 }
@@ -120,6 +121,7 @@ const styles = StyleSheet.create({
 		display: 'flex',
 		flex: 1,
 		backgroundColor: '#6C63FF',
+		paddingBottom: 30,
 	},
 	title: {
 		fontFamily: 'SourceBold',

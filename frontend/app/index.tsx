@@ -4,6 +4,8 @@ import { useRouter } from 'expo-router';
 import { isLoggedIn } from '../lib/auth';
 import { useEffect } from 'react';
 import HomeLogo from '@/components/svgs/HomeLogo';
+import HomePage from '@/components/svgs/HomePage';
+import React from 'react';
 
 export default function Landing() {
 	const router = useRouter();
@@ -20,26 +22,28 @@ export default function Landing() {
 	}, []);
 
 	return (
-   
-		<SafeAreaView style={styles.container}>
-			<KeyboardAwareScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ flex: 1, padding: 30 }}>
-				<View style={{ gap: 50, justifyContent: 'flex-end', height: '100%' }}>
-					<View style={{ gap: 5, alignItems: 'center' }}>
-                    <HomeLogo></HomeLogo>
-						<Text style={styles.title}>ClearHelp</Text>
-						<Text style={styles.description}>All the help you need is just one tap away</Text>
+		<>
+			<HomePage style={{position: 'absolute', zIndex: 99}} height={350}/>
+			<SafeAreaView style={styles.container}>
+				<KeyboardAwareScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ flex: 1, padding: 30 }}>
+					<View style={{ gap: 50, justifyContent: 'flex-end', height: '100%' }}>
+						<View style={{ gap: 5, alignItems: 'center' }}>
+							<HomeLogo></HomeLogo>
+							<Text style={styles.title}>ClearHelp</Text>
+							<Text style={styles.description}>All the help you need is just one tap away</Text>
+						</View>
+						<View style={{ gap: 15 }}>
+							<TouchableOpacity style={styles.btn} onPress={() => router.navigate('/login')}>
+								<Text style={styles.btnText}>I have an account</Text>
+							</TouchableOpacity>
+							<TouchableOpacity style={[styles.btn, { backgroundColor: '#918AFF' }]} onPress={() => router.navigate('/signup')}>
+								<Text style={[styles.btnText, { color: 'white' }]}>I don't have an account</Text>
+							</TouchableOpacity>
+						</View>
 					</View>
-					<View style={{gap: 15}}>
-						<TouchableOpacity style={styles.btn} onPress={() => router.navigate('/login')}>
-							<Text style={styles.btnText}>I have an account</Text>
-						</TouchableOpacity>
-						<TouchableOpacity style={[styles.btn, { backgroundColor: '#918AFF' }]} onPress={() => router.navigate('/signup')}>
-							<Text style={[styles.btnText, { color: 'white' }]}>I don't have an account</Text>
-						</TouchableOpacity>
-					</View>
-				</View>
-			</KeyboardAwareScrollView>
-		</SafeAreaView>
+				</KeyboardAwareScrollView>
+			</SafeAreaView>
+		</>
 	);
 }
 
@@ -66,7 +70,7 @@ const styles = StyleSheet.create({
 		paddingVertical: 15,
 		alignItems: 'center',
 		borderRadius: 15,
-        shadowOffset: { width: 0, height: 4 },
+		shadowOffset: { width: 0, height: 4 },
 		shadowOpacity: 0.25,
 	},
 	btnText: {

@@ -4,14 +4,54 @@ import Fork from 'react-native-vector-icons/Ionicons';
 import Moon from 'react-native-vector-icons/Ionicons';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { Prescription } from '@/lib/context';
-import React from 'react';
+import React, { useContext, useEffect, useState } from 'react';
+import api from '@/lib/axiosConfig';
+import { global } from '@/lib/context';
 
 const MedicineCard = ({ prescription }: { prescription: Prescription }) => {
-	const takeMed = () => {};
+	const { updateUser } = useContext(global);
+	const [time, setTime] = useState(0);
+
+	useEffect(() => {
+		if (prescription.lastTaken == null) return;
+
+		const msPerUnit = prescription.periodUnit === 'h' ? 3600 * 1000 : (24 * 3600 * 1000) / prescription.freq;
+		const totalDurationMs = prescription.period * msPerUnit;
+		const timeElapsed = Date.now() - new Date(prescription.lastTaken).valueOf();
+		const initialSeconds = Math.ceil((totalDurationMs - timeElapsed) / 1000);
+
+		setTime(initialSeconds);
+
+		const interval = setInterval(() => {
+			setTime((prev) => {
+				if (prev <= 1) {
+					clearInterval(interval);
+					return 0;
+				}
+				return prev - 1;
+			});
+		}, 1000);
+
+		// Cleanup on unmount or prescription change
+		return () => clearInterval(interval);
+	}, [prescription]);
+
+	const takeMed = () => {
+		api.post('/take', {
+			prescriptionId: prescription.id,
+		})
+			.then((resp) => {
+				console.log(resp);
+				updateUser();
+			})
+			.catch((err) => {
+				console.log(err);
+			});
+	};
 
 	return (
 		<TouchableOpacity style={styles.container}>
-			<View style={{ justifyContent: 'space-between', gap: 10 }}>
+			<View style={{ justifyContent: 'space-between', gap: 0 }}>
 				<View>
 					<Text style={styles.name} numberOfLines={2}>
 						{prescription.medication}
@@ -20,40 +60,40 @@ const MedicineCard = ({ prescription }: { prescription: Prescription }) => {
 				</View>
 				<View style={{ gap: 3 }}>
 					<Text style={styles.take}>TAKE DURING</Text>
-					<View style={{ flexDirection: 'row', gap: 5 }}>
+					<View style={{ flexDirection: 'row', gap: 8 }}>
 						<Sun
 							name="sunny"
 							color={'white'}
-							size={32}
+							size={28}
 							style={prescription.medication === 'morning' ? styles.sunActive : styles.emojiInactive}
 						></Sun>
 						<Fork
 							name="restaurant"
 							color={'yellow'}
-							size={32}
+							size={28}
 							style={prescription.medication === 'meal' ? styles.mealActive : styles.emojiInactive}
 						></Fork>
 						<Moon
 							name="moon"
 							color={'white'}
-							size={32}
+							size={28}
 							style={prescription.medication === 'night' ? styles.moonActive : styles.emojiInactive}
 						></Moon>
 					</View>
 				</View>
+				<Text style={[styles.interval, { alignSelf: 'flex-start' }]}>{prescription.freq} dose(s) left</Text>
 			</View>
 			<View style={{ justifyContent: 'space-between', gap: 10 }}>
 				<Text style={styles.interval}>
 					Every {prescription.period} {prescription.periodUnit === 'h' ? 'hour(s)' : 'day(s)'}
 				</Text>
-
 				{prescription.lastTaken === null ||
 				Date.now() - new Date(prescription.lastTaken).valueOf() >=
-					(prescription.period * ((prescription.periodUnit == 'h' ? 3600 : 3600 * 24) * 1000)) / prescription.freq ? (
+					prescription.period * ((prescription.periodUnit == 'h' ? 3600 : (3600 * 24) / prescription.freq) * 1000) ? (
 					<>
 						<TouchableOpacity style={styles.btn} onPress={takeMed}>
-							<Text style={styles.btnText}>Taken</Text>
-							<View style={styles.circle}></View>
+							<Text style={styles.btnText}>I Took It 💊</Text>
+							{/* <View style={styles.circle}></View> */}
 							{/* <Icon name="checkmark" size={32} style={{ position: 'absolute', right: 8, borderColor: 'black' }} color={'#3BC23B'}></Icon> */}
 						</TouchableOpacity>
 						<View style={styles.statusContainer}>
@@ -64,15 +104,15 @@ const MedicineCard = ({ prescription }: { prescription: Prescription }) => {
 				) : (
 					<>
 						<TouchableOpacity style={styles.btn} onPress={takeMed}>
-							<Text style={styles.btnText}>I've taken it</Text>
-							<View style={styles.circle}></View>
+							<Text style={styles.btnText}>
+								{Math.floor((time / 3600) % 60) > 0 ? `${String(Math.floor((time / 3600) % 60)).padStart(1, '0')}:` : ''}
+								{String(Math.floor((time / 60) % 60)).padStart(1, '0')}:{String(time % 60).padStart(2, '0')}
+							</Text>
 							{/* <Icon name="checkmark" size={32} style={{ position: 'absolute', right: 8, borderColor: 'black' }} color={'#3BC23B'}></Icon> */}
 						</TouchableOpacity>
-						<View style={{ flexDirection: 'row', gap: 3, alignItems: 'center', alignSelf: 'flex-end' }}>
-							<Text style={styles.status}>Ready to be taken</Text>
-						</View>
-						<View style={styles.progress}>
-							<View style={styles.innerProgress}></View>
+						<View style={[styles.statusContainer, { backgroundColor: '#FFCCCC' }]}>
+							<Text style={[styles.status, { color: 'red' }]}>NOT READY</Text>
+							<Icon name="close" size={16} color={'red'}></Icon>
 						</View>
 					</>
 				)}
@@ -89,17 +129,18 @@ const styles = StyleSheet.create({
 		justifyContent: 'space-between',
 		gap: 5,
 		paddingHorizontal: 15,
-		paddingVertical: 10,
+		paddingVertical: 12,
 		backgroundColor: 'white',
 		borderRadius: 15,
 		shadowOffset: { width: 0, height: 4 },
 		shadowOpacity: 0.25,
-		height: 140,
+		height: 150,
 	},
 	name: {
 		fontFamily: 'SourceSemibold',
 		fontSize: 20,
 		maxWidth: 180,
+        lineHeight: 20
 	},
 	description: {
 		fontFamily: 'Source',
@@ -135,7 +176,7 @@ const styles = StyleSheet.create({
 		backgroundColor: '#6C63FF',
 		borderRadius: 10,
 		paddingVertical: 10,
-		paddingHorizontal: 10,
+		paddingHorizontal: 15,
 		flexDirection: 'row',
 		alignItems: 'center',
 		gap: 10,
@@ -151,7 +192,7 @@ const styles = StyleSheet.create({
 		gap: 3,
 		alignItems: 'center',
 		alignSelf: 'flex-end',
-        backgroundColor: 'lightgreen',
+		backgroundColor: 'lightgreen',
 		paddingHorizontal: 12,
 		paddingVertical: 2,
 		borderRadius: 10,
@@ -160,7 +201,6 @@ const styles = StyleSheet.create({
 		fontFamily: 'SourceSemibold',
 		fontSize: 14,
 		color: 'green',
-		
 	},
 	circle: {
 		borderRadius: '100%',
@@ -170,19 +210,5 @@ const styles = StyleSheet.create({
 		justifyContent: 'center',
 		alignItems: 'center',
 		overflow: 'visible',
-	},
-	progress: {
-		height: 1,
-		width: '100%',
-		backgroundColor: '#E2E0FF',
-		borderRadius: 10,
-	},
-	innerProgress: {
-		height: 1,
-		width: '100%',
-		backgroundColor: '#E2E0FF',
-		borderRadius: 10,
-		position: 'absolute',
-		left: 0,
 	},
 });
