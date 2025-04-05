@@ -11,13 +11,13 @@ import 'react-native-reanimated';
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
-	const [ctxState, setCtxState] = useState<{ user: User | null }>({ user: null });
+	const [ctxState, setCtxState] = useState<User | null>(null);
 	const [loaded, error] = useFonts({
 		SourceBold: require('../assets/fonts/SourceSansPro-Bold.otf'),
 		SourceLight: require('../assets/fonts/SourceSansPro-Light.otf'),
 		Source: require('../assets/fonts/SourceSansPro-Regular.otf'),
 		SourceSemibold: require('../assets/fonts/SourceSansPro-Semibold.otf'),
-		...FontAwesome.font
+		...FontAwesome.font,
 	});
 
 	useEffect(() => {
@@ -27,27 +27,26 @@ export default function RootLayout() {
 	}, [loaded]);
 
 	useEffect(() => {
-		const check = async () => {
-			const loggedIn = await isLoggedIn();
-
-			if (loggedIn) {
-				const user = await api.get('/me').then((res) => res.data);
-
-				setCtxState((prevState) => ({ ...prevState, user }));
-			}
-		};
-
-		check();
+		updateUser()
 	}, []);
+
+	const updateUser = async () => {
+		const loggedIn = await isLoggedIn();
+
+		if (loggedIn) {
+			const user = await api.get('/me').then((res) => res.data);
+
+			setCtxState(user);
+		}
+	};
 
 	if (!loaded) {
 		return null;
 	}
 
 	return (
-		<global.Provider value={ctxState}>
+		<global.Provider value={{ user: ctxState, updateUser }}>
 			<Stack screenOptions={{ headerShown: false }} />
 		</global.Provider>
 	);
 }
-

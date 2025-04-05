@@ -25,10 +25,11 @@ const styles = StyleSheet.create({
 		alignItems: 'center',
 		justifyContent: 'space-between',
         paddingHorizontal: 20,
+        paddingVertical: 10
 	},
     btn: {
         backgroundColor: 'red',
-        paddingHorizontal: 35,
+        paddingHorizontal: 30,
         paddingVertical: 15,
         borderRadius: 15,
         flexDirection: 'row',

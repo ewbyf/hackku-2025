@@ -32,5 +32,5 @@ export interface User {
 	procedures: PatientProcedure[];
 }
 
-export const global = React.createContext<{ user: User | null }>({ user: null });
+export const global = React.createContext<{ user: User | null, updateUser: () => void }>({ user: null, updateUser: () => {} });
 

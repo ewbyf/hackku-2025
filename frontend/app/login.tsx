@@ -2,29 +2,33 @@ import BackArrow from '@/components/BackArrow';
 import { login } from '@/lib/auth';
 import api from '@/lib/axiosConfig';
 import { Link, useRouter } from 'expo-router';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { global } from '@/lib/context';
 
 export default function Login() {
 	const router = useRouter();
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 
+	const { updateUser } = useContext(global);
+
 	const handleLogin = async () => {
 		api.post('/login', {
 			email,
-			password
+			password,
 		})
 			.then((res) => {
 				const data = res.data;
 
 				login(data.token);
+				updateUser();
+				router.replace('/home');
 			})
 			.catch((err) => {
 				console.log(err.response.data);
 			});
-		router.replace('/home');
 	};
 
 	return (
@@ -43,7 +47,8 @@ export default function Login() {
 								onChangeText={(e) => {
 									setEmail(e);
 								}}
-								value={email}></TextInput>
+								value={email}
+							></TextInput>
 						</View>
 						<View style={{ gap: 5 }}>
 							<Text style={styles.label}>PASSWORD</Text>
@@ -55,7 +60,8 @@ export default function Login() {
 									setPassword(e);
 								}}
 								value={password}
-								secureTextEntry={true}></TextInput>
+								secureTextEntry={true}
+							></TextInput>
 						</View>
 						<TouchableOpacity style={styles.btn} onPress={handleLogin}>
 							<Text style={styles.btnText}>Sign in</Text>
@@ -77,18 +83,18 @@ const styles = StyleSheet.create({
 	container: {
 		display: 'flex',
 		flex: 1,
-		backgroundColor: '#6C63FF'
+		backgroundColor: '#6C63FF',
 	},
 	title: {
 		fontFamily: 'SourceBold',
 		color: 'white',
-		fontSize: 48
+		fontSize: 48,
 	},
 	description: {
 		fontFamily: 'Source',
 		color: 'white',
 		fontSize: 24,
-		textAlign: 'center'
+		textAlign: 'center',
 	},
 	btn: {
 		backgroundColor: 'white',
@@ -98,30 +104,29 @@ const styles = StyleSheet.create({
 		borderRadius: 15,
 		shadowOffset: { width: 0, height: 4 },
 		shadowOpacity: 0.25,
-		marginTop: 10
+		marginTop: 10,
 	},
 	btnText: {
 		color: '#6C63FF',
 		fontFamily: 'SourceSemibold',
-		fontSize: 22
+		fontSize: 22,
 	},
 	input: {
 		borderRadius: 10,
 		fontSize: 16,
 		padding: 15,
 		color: 'white',
-		backgroundColor: '#918AFF'
+		backgroundColor: '#918AFF',
 	},
 	label: {
 		color: 'white',
 		fontFamily: 'SourceBold',
-		fontSize: 14
+		fontSize: 14,
 	},
 	swapLabel: {
 		color: 'white',
 		fontFamily: 'Source',
 		fontSize: 15,
-		textAlign: 'center'
-	}
+		textAlign: 'center',
+	},
 });
-
