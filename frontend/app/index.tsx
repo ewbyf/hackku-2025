@@ -3,6 +3,7 @@ import { StyleSheet, TouchableOpacity, View, Text, TextInput, SafeAreaView, Butt
 import { useRouter } from 'expo-router';
 import { isLoggedIn } from '../lib/auth';
 import { useEffect } from 'react';
+import HomeLogo from '@/components/svgs/HomeLogo';
 
 export default function Landing() {
 	const router = useRouter();
@@ -19,17 +20,16 @@ export default function Landing() {
 	}, []);
 
 	return (
+   
 		<SafeAreaView style={styles.container}>
 			<KeyboardAwareScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ flex: 1, padding: 30 }}>
 				<View style={{ gap: 50, justifyContent: 'flex-end', height: '100%' }}>
 					<View style={{ gap: 5, alignItems: 'center' }}>
+                    <HomeLogo></HomeLogo>
 						<Text style={styles.title}>ClearHelp</Text>
 						<Text style={styles.description}>All the help you need is just one tap away</Text>
 					</View>
 					<View style={{gap: 15}}>
-						<TouchableOpacity style={styles.btn} onPress={() => router.navigate('/home')}>
-							<Text style={styles.btnText}>JUMP TO HOME PAGE!</Text>
-						</TouchableOpacity>
 						<TouchableOpacity style={styles.btn} onPress={() => router.navigate('/login')}>
 							<Text style={styles.btnText}>I have an account</Text>
 						</TouchableOpacity>

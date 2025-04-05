@@ -1,7 +1,7 @@
 import * as React from "react"
 import Svg, { Path } from "react-native-svg"
 
-function SignUp(props:any) {
+function SignUpSvg(props:any) {
   return (
     <Svg
       width={402}
@@ -90,4 +90,4 @@ function SignUp(props:any) {
   )
 }
 
-export default SignUp
+export default SignUpSvg
