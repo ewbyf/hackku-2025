@@ -30,7 +30,7 @@ export interface User {
 	email: string;
 	fihrId: string;
 	token: string;
-	prescriptions: Prescription[];
+	prescriptions: Prescription[][];
 	procedures: PatientProcedure[];
 }
 

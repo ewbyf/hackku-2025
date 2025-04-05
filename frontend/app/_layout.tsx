@@ -44,7 +44,6 @@ export default function RootLayout() {
 
             user.prescriptions = sortPrescriptions(user.prescriptions)
 
-
 			setCtxState(user);
 		}
 	};

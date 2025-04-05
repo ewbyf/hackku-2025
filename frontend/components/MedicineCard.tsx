@@ -114,10 +114,10 @@ const MedicineCard = ({ prescription }: { prescription: Prescription }) => {
 					</>
 				) : (
 					<>
-						<View style={[styles.btn, { shadowColor: 'rgba(0,0,0,0)' }]}>
+						<View style={[styles.btn, { shadowColor: 'rgba(0,0,0,0)', backgroundColor: '#6C63FF', opacity: .8 }]}>
 							<Text style={styles.btnText}>
 								{Math.floor((time / 3600) % 60) > 0 ? `${String(Math.floor((time / 3600) % 60)).padStart(1, '0')}:` : ''}
-								{String(Math.floor((time / 60) % 60)).padStart(1, '0')}:{String(time % 60).padStart(2, '0')}
+								{String(Math.floor((time / 60) % 60)).padStart(2, '0')}:{String(time % 60).padStart(2, '0')}
 							</Text>
 							{/* <Icon name="checkmark" size={32} style={{ position: 'absolute', right: 8, borderColor: 'black' }} color={'#3BC23B'}></Icon> */}
 						</View>

@@ -1,4 +1,4 @@
-import { Prescription } from "./context"
+import { Prescription } from "./context";
 
 export const sortPrescriptions = (prescriptions: Prescription[]) => {
 	const notDueToday: Prescription[] = [];
@@ -39,9 +39,9 @@ export const sortPrescriptions = (prescriptions: Prescription[]) => {
 	inProgress.sort((a, b) => a.initialSeconds - b.initialSeconds);
 
 	const sorted = [
-		...notInProgress.map((p) => p.prescription),
-		...inProgress.map((p) => p.prescription),
-		...notDueToday,
+		notInProgress.map((p) => p.prescription),
+		inProgress.map((p) => p.prescription),
+		notDueToday,
 	];
 
 	return sorted;
