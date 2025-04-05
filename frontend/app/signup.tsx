@@ -8,15 +8,15 @@ import api from '@/lib/axiosConfig';
 
 export default function SignUp() {
 	const router = useRouter();
-	const [name, setName] = useState('');
+	// const [name, setName] = useState('');
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 	const [confirmPassword, setConfirmPassword] = useState('');
 
 	const handleSignUp = async () => {
 		if (password == confirmPassword) {
-			api.post('/signup', {
-				name,
+			api.post('/register', {
+				// name,
 				email,
 				password,
 			})
@@ -37,7 +37,7 @@ export default function SignUp() {
 				<View style={{ gap: 50, justifyContent: 'flex-end', height: '100%' }}>
 					<Text style={styles.title}>Let's create an account</Text>
 					<View style={{ gap: 20 }}>
-						<View style={{ gap: 5 }}>
+						{/* <View style={{ gap: 5 }}>
 							<Text style={styles.label}>NAME</Text>
 							<TextInput
 								style={[styles.input]}
@@ -48,7 +48,7 @@ export default function SignUp() {
 								}}
 								value={name}
 							></TextInput>
-						</View>
+						</View> */}
 						<View style={{ gap: 5 }}>
 							<Text style={styles.label}>EMAIL ADDRESS</Text>
 							<TextInput
