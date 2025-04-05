@@ -3,7 +3,7 @@ import Logo from 'react-native-vector-icons/Ionicons';
 
 const Title = ({ children }: {children: string}) => {
     return (
-        <View>
+        <View style={{marginBottom: 20}}>
             <Text style={styles.txt}>{children}</Text>
             <View style={styles.bar}></View>
         </View>
@@ -13,12 +13,6 @@ const Title = ({ children }: {children: string}) => {
 export default Title;
 
 const styles = StyleSheet.create({
-    container: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        paddingHorizontal: 20,
-    },
     txt: {
         fontFamily: 'SourceBold',
         fontSize: 36,

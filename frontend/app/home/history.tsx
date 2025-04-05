@@ -7,7 +7,7 @@ export default function History() {
 
     return (
         <SafeAreaView style={styles.container}>
-            <KeyboardAwareScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ flex: 1, padding: 30 }}>
+            <KeyboardAwareScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ flex: 1, padding: 20 }}>
                 <Text>Login</Text>
             </KeyboardAwareScrollView>
         </SafeAreaView>

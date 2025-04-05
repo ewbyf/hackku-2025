@@ -6,23 +6,29 @@ import Title from '@/components/Title';
 import MedicineCard from '@/components/MedicineCard';
 
 export default function Home() {
-    const router = useRouter();
+	const router = useRouter();
 
-    return (
-        <SafeAreaView style={styles.container}>
-            <TopBar/>
-            <KeyboardAwareScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ flex: 1, padding: 30 }}>
-                <Title>Today</Title>
-                <Text>Login</Text>
-                <MedicineCard/>
-            </KeyboardAwareScrollView>
-        </SafeAreaView>
-    );
+	return (
+		<SafeAreaView style={styles.container}>
+			<TopBar />
+			<KeyboardAwareScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ flex: 1, padding: 20 }}>
+				<Title>Today</Title>
+				<MedicineCard
+					name="Drug name"
+					description="blah blah blah..."
+					takeDuring="Night"
+					timestamp={new Date()}
+					interval="Every 4 days"
+					type="Liquid"
+				/>
+			</KeyboardAwareScrollView>
+		</SafeAreaView>
+	);
 }
 
 const styles = StyleSheet.create({
-    container: {
-        display: 'flex',
-        flex: 1,
-    },
+	container: {
+		display: 'flex',
+		flex: 1,
+	},
 });
