@@ -33,6 +33,15 @@ export class UsersService implements AuthDataSource {
 		const plans = await axios.get('https://hapi.fhir.org/baseR4/CarePlan?_format=json').then((res) => res.data);
 		const plan = plans[Math.floor(Math.random() * plans.length)];
 
+		const patient = plan.resource.subject.reference;
+		const fihrId = patient.split('/')[1];
+
+		const prescriptions = await axios
+			.get(`https://hapi.fhir.org/baseR4/MedicationStatement?_pretty=true&_subject.reference=${patient}&_format=json`)
+			.then((res) => res.data.filter((p) => p.subject.reference === patient && !p.dosage[0].asNeededBoolean));
+
+		if (prescriptions.length === 0) return this.register({ email, password });
+
 		return this.db.user
 			.create({
 				data: {
@@ -40,7 +49,34 @@ export class UsersService implements AuthDataSource {
 					email,
 					password: hashedPassword,
 					token: randomBytes(32).toString('hex'),
-					fihrId: plan.resource.subject.reference.split('/')[1]
+					fihrId,
+					prescriptions: {
+						create: prescriptions.map((prescription): Prisma.PrescriptionCreateWithoutUserInput => {
+							const [dose] = prescription.resource;
+							const parts = dose.text.split(' ');
+
+							let dosage, vector;
+
+							if (parts.length > 2) {
+								[dosage, vector] = parts;
+
+								dosage = Number(dosage);
+							} else {
+								dosage = 1;
+								vector = null;
+							}
+
+							return {
+								medication: prescription.resource.medicationCodeableConcept.text,
+								dosage,
+								vector,
+								freq: dose.timing.repeat.frequency,
+								period: dose.timing.repeat.period,
+								periodUnit: dose.timing.repeat.periodUnit,
+								lastTaken: null
+							};
+						})
+					}
 				},
 				...meUser
 			})

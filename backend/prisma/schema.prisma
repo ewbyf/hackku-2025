@@ -28,9 +28,10 @@ model Prescription {
     userId     String
     medication String
     dosage     Int
-    vector     String
+    vector     String?
     freq       Int
-    freqUnit   String
+    period     Int
+    periodUnit String
     lastTaken  DateTime?
 
     user User @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
