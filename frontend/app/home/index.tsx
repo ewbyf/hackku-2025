@@ -1,16 +1,15 @@
-import { useRouter } from 'expo-router';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import { StyleSheet, TouchableOpacity, View, Text, TextInput, SafeAreaView, Button, ImageBackground } from 'react-native';
-import TopBar from '@/components/TopBar';
-import Title from '@/components/Title';
 import MedicineCard from '@/components/MedicineCard';
-import React, { useContext } from 'react';
-import BGSvg from '@/components/svgs/BG';
-import { BlurView } from 'expo-blur';
+import Title from '@/components/Title';
+import TopBar from '@/components/TopBar';
 import { global } from '@/lib/context';
+import { useRouter } from 'expo-router';
+import React, { useContext, useState } from 'react';
+import { ImageBackground, SafeAreaView, StyleSheet, View } from 'react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 export default function Home() {
 	const router = useRouter();
+	const [hasEvent, setHasEvent] = useState(false);
 
 	const { user } = useContext(global);
 
@@ -21,12 +20,11 @@ export default function Home() {
 					<TopBar />
 					<KeyboardAwareScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ padding: 20, paddingBottom: 80 }}>
 						<Title>Today</Title>
-                        <View style={{gap: 20}}>
-
-						{user?.prescriptions.map((prescription) => (
-                            <MedicineCard key={prescription.medication} prescription={prescription} />
-						))}
-                        </View>
+						<View style={{ gap: 20 }}>
+							{user?.prescriptions.map((prescription) => (
+								<MedicineCard key={prescription.medication} prescription={prescription} />
+							))}
+						</View>
 					</KeyboardAwareScrollView>
 				</SafeAreaView>
 			</ImageBackground>
@@ -37,11 +35,12 @@ export default function Home() {
 const styles = StyleSheet.create({
 	container: {
 		display: 'flex',
-		flex: 1,
+		flex: 1
 	},
 	blurContainer: {
 		padding: 20,
 		borderRadius: 10,
-		overflow: 'hidden',
-	},
+		overflow: 'hidden'
+	}
 });
+

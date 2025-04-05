@@ -1,22 +1,24 @@
-import { useRouter } from 'expo-router';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import { StyleSheet, TouchableOpacity, View, Text, TextInput, SafeAreaView, Button } from 'react-native';
 import CustomMedicationTimeline from '@/components/HistoryCard';
-export default function History() {
-    const router = useRouter();
+import { useRouter } from 'expo-router';
+import { SafeAreaView, StyleSheet } from 'react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
-    return (
-        <SafeAreaView style={styles.container}>
-            <KeyboardAwareScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ flex: 1, padding: 20 }}>
-                <CustomMedicationTimeline/>
-            </KeyboardAwareScrollView>
-        </SafeAreaView>
-    );
+export default function History() {
+	const router = useRouter();
+
+	return (
+		<SafeAreaView style={styles.container}>
+			<KeyboardAwareScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ flex: 1, padding: 20 }}>
+				<CustomMedicationTimeline />
+			</KeyboardAwareScrollView>
+		</SafeAreaView>
+	);
 }
 
 const styles = StyleSheet.create({
-    container: {
-        display: 'flex',
-        flex: 1,
-    },
+	container: {
+		display: 'flex',
+		flex: 1
+	}
 });
+

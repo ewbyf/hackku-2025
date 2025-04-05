@@ -65,21 +65,25 @@ export class UsersService implements AuthDataSource {
 							const [dose] = prescription.resource.dosage;
 							const parts = dose.text.split(' ');
 
-							let dosage, vector;
+							let dosage, vector, timing;
 
 							if (parts.length > 2) {
-								[dosage, vector] = parts;
+								[dosage, vector, ...timing] = parts;
 
 								dosage = dosage === 'once' ? 1 : Number(dosage);
+								timing = timing.join(' ');
+								if (timing.includes('hours') || timing.includes('daily')) timing = null;
 							} else {
 								dosage = 1;
 								vector = null;
+								timing = null;
 							}
 
 							return {
 								medication: prescription.resource.medicationCodeableConcept.coding[0].display,
 								dosage,
 								vector,
+								timing,
 								freq: dose.timing.repeat.frequency,
 								period: dose.timing.repeat.period,
 								periodUnit: dose.timing.repeat.periodUnit,
