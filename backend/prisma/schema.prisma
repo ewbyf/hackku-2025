@@ -21,6 +21,7 @@ model User {
     token    String @unique
 
     prescriptions Prescription[]
+    procedures    PatientProcedure[]
 }
 
 model Prescription {
@@ -32,9 +33,28 @@ model Prescription {
     freq       Int
     period     Int
     periodUnit String
+    takenToday Int
     lastTaken  DateTime?
 
     user User @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
 
     @@id([id, userId])
+}
+
+model ExplainedProcedure {
+    technical   String @id
+    explanation String @db.VarChar(1024)
+
+    patientProcedures PatientProcedure[]
+}
+
+model PatientProcedure {
+    order  Int
+    userId String
+    name   String
+
+    user        User               @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+    explanation ExplainedProcedure @relation(fields: [name], references: [technical])
+
+    @@id([userId, order])
 }

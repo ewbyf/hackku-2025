@@ -1,8 +1,8 @@
 import { Body, Controller, Get, Post, UnauthorizedException } from '@nestjs/common';
 import { User } from '@prisma/client';
 import { Protected } from './auth/protected.decorator';
-import { LoginDTO, RegisterDTO } from './users/users.dtos';
-import { MeUser } from './users/users.models';
+import { LoginDTO, RegisterDTO, TakePrescriptionDTO } from './users/users.dtos';
+import { meUser, MeUser } from './users/users.models';
 import { UsersService } from './users/users.service';
 import { ReqUser } from './utils/decorators/user.decorator';
 
@@ -12,8 +12,8 @@ export class AppController {
 
 	@Get('/me')
 	@Protected()
-	public getMe(@ReqUser() { id, email, fihrId, token }: User): MeUser {
-		return { id, email, fihrId, token };
+	public async getMe(@ReqUser() { id }: User): Promise<MeUser> {
+		return (await this.users.get({ id }, meUser))!;
 	}
 
 	@Post('/register')
@@ -28,6 +28,12 @@ export class AppController {
 		if (!user) throw new UnauthorizedException('User with email/password combination not found');
 
 		return user;
+	}
+
+	@Post('/take')
+	@Protected()
+	public async takePrescription(@ReqUser() user: User, @Body() { prescriptionId }: TakePrescriptionDTO): Promise<void> {
+		return this.users.take(user, prescriptionId);
 	}
 }
 

@@ -16,3 +16,9 @@ export class RegisterDTO {
 	@IsString()
 	password: string = fi();
 }
+
+export class TakePrescriptionDTO {
+	@IsString()
+	prescriptionId: string = fi();
+}
+

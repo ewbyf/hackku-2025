@@ -1,13 +1,10 @@
 import { Inject, Injectable, NestMiddleware, forwardRef } from '@nestjs/common';
 import { NextFunction, Request } from 'express';
-import { AuthDataSource, DATA_SOURCE, PREFIX } from './auth.module';
+import { AuthDataSource, DATA_SOURCE } from './auth.module';
 
 @Injectable()
 export class AuthMiddleware implements NestMiddleware {
-	public constructor(
-		@Inject(forwardRef(() => DATA_SOURCE)) private readonly source: AuthDataSource,
-		@Inject(forwardRef(() => PREFIX)) private readonly prefix: string
-	) {}
+	public constructor(@Inject(forwardRef(() => DATA_SOURCE)) private readonly source: AuthDataSource) {}
 
 	use(req: Request, _, next: NextFunction) {
 		const [, token] = req.header('Authorization')?.split(' ') ?? [];

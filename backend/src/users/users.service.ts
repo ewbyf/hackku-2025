@@ -1,22 +1,32 @@
+import { Injectable } from '@nestjs/common';
 import { createId } from '@paralleldrive/cuid2';
 import { Prisma, User } from '@prisma/client';
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
 import axios from 'axios';
 import { compareSync, genSaltSync, hashSync } from 'bcrypt';
 import { randomBytes } from 'crypto';
+import { AIService } from 'src/ai/ai.service';
 import { AuthDataSource } from 'src/auth/auth.module';
 import { DBService } from 'src/db/db.service';
 import { LoginDTO, RegisterDTO } from './users.dtos';
 import { meUser, MeUser } from './users.models';
 
+@Injectable()
 export class UsersService implements AuthDataSource {
-	public constructor(private readonly db: DBService) {}
+	public constructor(private readonly db: DBService, private readonly ai: AIService) {}
 
 	public async get<S extends Prisma.UserDefaultArgs>(
 		where: Prisma.UserWhereUniqueInput,
 		selectors: S = {} as any
 	): Promise<Prisma.UserGetPayload<S> | null> {
 		return this.db.user.findUnique({ where, ...selectors }) as any;
+	}
+
+	public async take(user: User, prescriptionId: string): Promise<void> {
+		await this.db.prescription.update({
+			where: { id_userId: { id: prescriptionId, userId: user.id } },
+			data: { takenToday: { increment: 1 }, lastTaken: new Date() }
+		});
 	}
 
 	public async login({ email, password }: LoginDTO): Promise<MeUser | null> {
@@ -30,15 +40,15 @@ export class UsersService implements AuthDataSource {
 		const id = createId();
 		const hashedPassword = hashSync(password, genSaltSync());
 
-		const plans = await axios.get('https://hapi.fhir.org/baseR4/CarePlan?_format=json').then((res) => res.data);
-		const plan = plans[Math.floor(Math.random() * plans.length)];
+		const plan = await axios.get('https://hapi.fhir.org/baseR4/CarePlan/53333?_format=json').then((res) => res.data);
 
-		const patient = plan.resource.subject.reference;
+		const patient = plan.subject.reference;
 		const fihrId = patient.split('/')[1];
 
 		const prescriptions = await axios
-			.get(`https://hapi.fhir.org/baseR4/MedicationStatement?_pretty=true&_subject.reference=${patient}&_format=json`)
-			.then((res) => res.data.filter((p) => p.subject.reference === patient && !p.dosage[0].asNeededBoolean));
+			.get('https://hapi.fhir.org/baseR4/MedicationStatement?_pretty=true&patient=Patient/30163&_format=json')
+			.then((res) => res.data.entry)
+			.then((data) => data.filter((p) => !p.resource.dosage[0].asNeededBoolean && p.resource.medicationCodeableConcept));
 
 		if (prescriptions.length === 0) return this.register({ email, password });
 
@@ -52,7 +62,7 @@ export class UsersService implements AuthDataSource {
 					fihrId,
 					prescriptions: {
 						create: prescriptions.map((prescription): Prisma.PrescriptionCreateWithoutUserInput => {
-							const [dose] = prescription.resource;
+							const [dose] = prescription.resource.dosage;
 							const parts = dose.text.split(' ');
 
 							let dosage, vector;
@@ -60,23 +70,25 @@ export class UsersService implements AuthDataSource {
 							if (parts.length > 2) {
 								[dosage, vector] = parts;
 
-								dosage = Number(dosage);
+								dosage = dosage === 'once' ? 1 : Number(dosage);
 							} else {
 								dosage = 1;
 								vector = null;
 							}
 
 							return {
-								medication: prescription.resource.medicationCodeableConcept.text,
+								medication: prescription.resource.medicationCodeableConcept.coding[0].display,
 								dosage,
 								vector,
 								freq: dose.timing.repeat.frequency,
 								period: dose.timing.repeat.period,
 								periodUnit: dose.timing.repeat.periodUnit,
+								takenToday: 0,
 								lastTaken: null
 							};
 						})
-					}
+					},
+					procedures: { create: await this._explain(plan.activity) }
 				},
 				...meUser
 			})
@@ -91,6 +103,21 @@ export class UsersService implements AuthDataSource {
 
 	public async auth(token: string): Promise<User | null> {
 		return this.get({ token });
+	}
+
+	private async _explain(procedures: any[]): Promise<Prisma.PatientProcedureCreateWithoutUserInput[]> {
+		const procs = procedures.filter((procedure) => procedure.detail.code);
+		const procNames = procs.map((procedure) => procedure.detail.code.coding[0].display);
+
+		const explainedProcs = await this.db.explainedProcedure.findMany({ where: { technical: { in: procNames } } });
+
+		return Promise.all(
+			procNames.map(async (name, i) =>
+				explainedProcs.some((explanation) => name === explanation.technical)
+					? { order: i, explanation: { connect: { technical: name } } }
+					: { order: i, explanation: { create: { technical: name, explanation: await this.ai.explain(name) } } }
+			)
+		);
 	}
 }
 
