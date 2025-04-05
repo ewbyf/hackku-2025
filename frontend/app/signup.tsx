@@ -6,6 +6,8 @@ import { useState, useContext } from 'react';
 import BackArrow from '@/components/BackArrow';
 import api from '@/lib/axiosConfig';
 import { global } from '@/lib/context';
+import SignUpSvg from '@/components/svgs/SignUpSvg';
+import React from 'react';
 
 export default function SignUp() {
 	const router = useRouter();
@@ -37,13 +39,15 @@ export default function SignUp() {
 	};
 
 	return (
-		<SafeAreaView style={styles.container}>
-			<KeyboardAwareScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ flex: 1, padding: 30 }}>
-				<BackArrow />
-				<View style={{ gap: 50, justifyContent: 'flex-end', height: '100%' }}>
-					<Text style={styles.title}>Let's create an account</Text>
-					<View style={{ gap: 20 }}>
-						{/* <View style={{ gap: 5 }}>
+		<>
+			<BackArrow />
+			<SignUpSvg style={{ position: 'absolute', zIndex: 1 }} height={275} />
+			<SafeAreaView style={styles.container}>
+				<KeyboardAwareScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ flex: 1, padding: 30 }}>
+					<View style={{ gap: 20, justifyContent: 'flex-end', height: '100%' }}>
+						<Text style={styles.title}>Let's create an account</Text>
+						<View style={{ gap: 20 }}>
+							{/* <View style={{ gap: 5 }}>
 							<Text style={styles.label}>NAME</Text>
 							<TextInput
 								style={[styles.input]}
@@ -55,58 +59,59 @@ export default function SignUp() {
 								value={name}
 							></TextInput>
 						</View> */}
-						<View style={{ gap: 5 }}>
-							<Text style={styles.label}>EMAIL ADDRESS</Text>
-							<TextInput
-								style={[styles.input]}
-								placeholder="Enter your email address..."
-								placeholderTextColor={'white'}
-								onChangeText={(e) => {
-									setEmail(e);
-								}}
-								value={email}
-							></TextInput>
-						</View>
-						<View style={{ gap: 5 }}>
-							<Text style={styles.label}>PASSWORD</Text>
-							<TextInput
-								style={[styles.input]}
-								placeholder="Enter your password..."
-								placeholderTextColor={'white'}
-								onChangeText={(e) => {
-									setPassword(e);
-								}}
-								value={password}
-								secureTextEntry={true}
-							></TextInput>
-						</View>
-						<View style={{ gap: 5 }}>
-							<Text style={styles.label}>CONFIRM PASSWORD</Text>
-							<TextInput
-								style={[styles.input]}
-								placeholder="Confirm your password..."
-								placeholderTextColor={'white'}
-								onChangeText={(e) => {
-									setConfirmPassword(e);
-								}}
-								value={confirmPassword}
-								secureTextEntry={true}
-							></TextInput>
-						</View>
+							<View style={{ gap: 5 }}>
+								<Text style={styles.label}>EMAIL ADDRESS</Text>
+								<TextInput
+									style={[styles.input]}
+									placeholder="Enter your email address..."
+									placeholderTextColor={'white'}
+									onChangeText={(e) => {
+										setEmail(e);
+									}}
+									value={email}
+								></TextInput>
+							</View>
+							<View style={{ gap: 5 }}>
+								<Text style={styles.label}>PASSWORD</Text>
+								<TextInput
+									style={[styles.input]}
+									placeholder="Enter your password..."
+									placeholderTextColor={'white'}
+									onChangeText={(e) => {
+										setPassword(e);
+									}}
+									value={password}
+									secureTextEntry={true}
+								></TextInput>
+							</View>
+							<View style={{ gap: 5 }}>
+								<Text style={styles.label}>CONFIRM PASSWORD</Text>
+								<TextInput
+									style={[styles.input]}
+									placeholder="Confirm your password..."
+									placeholderTextColor={'white'}
+									onChangeText={(e) => {
+										setConfirmPassword(e);
+									}}
+									value={confirmPassword}
+									secureTextEntry={true}
+								></TextInput>
+							</View>
 
-						<TouchableOpacity style={styles.btn} onPress={handleSignUp}>
-							<Text style={styles.btnText}>Create your account</Text>
-						</TouchableOpacity>
-						<Text style={styles.swapLabel}>
-							Already have an account?{' '}
-							<Link style={{ color: 'white', textDecorationLine: 'underline', fontFamily: 'SourceBold' }} href="/login">
-								Sign in
-							</Link>
-						</Text>
+							<TouchableOpacity style={styles.btn} onPress={handleSignUp}>
+								<Text style={styles.btnText}>Create your account</Text>
+							</TouchableOpacity>
+							<Text style={styles.swapLabel}>
+								Already have an account?{' '}
+								<Link style={{ color: 'white', textDecorationLine: 'underline', fontFamily: 'SourceBold' }} href="/login">
+									Sign in
+								</Link>
+							</Text>
+						</View>
 					</View>
-				</View>
-			</KeyboardAwareScrollView>
-		</SafeAreaView>
+				</KeyboardAwareScrollView>
+			</SafeAreaView>
+		</>
 	);
 }
 
