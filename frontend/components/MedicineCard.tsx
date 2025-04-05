@@ -7,15 +7,15 @@ import { Prescription } from '@/lib/context';
 import React from 'react';
 
 const MedicineCard = ({ prescription }: { prescription: Prescription }) => {
-	const takeMed = () => {
-        
-    };
+	const takeMed = () => {};
 
 	return (
 		<TouchableOpacity style={styles.container}>
 			<View style={{ justifyContent: 'space-between', gap: 10 }}>
 				<View>
-					<Text style={styles.name} numberOfLines={2}>{prescription.medication}</Text>
+					<Text style={styles.name} numberOfLines={2}>
+						{prescription.medication}
+					</Text>
 					{/* <Text style={styles.description}>{prescription.de}</Text> */}
 				</View>
 				<View style={{ gap: 3 }}>
@@ -52,13 +52,13 @@ const MedicineCard = ({ prescription }: { prescription: Prescription }) => {
 					(prescription.period * ((prescription.periodUnit == 'h' ? 3600 : 3600 * 24) * 1000)) / prescription.freq ? (
 					<>
 						<TouchableOpacity style={styles.btn} onPress={takeMed}>
-							<Text style={styles.btnText}>I've taken it</Text>
+							<Text style={styles.btnText}>Taken</Text>
 							<View style={styles.circle}></View>
 							{/* <Icon name="checkmark" size={32} style={{ position: 'absolute', right: 8, borderColor: 'black' }} color={'#3BC23B'}></Icon> */}
 						</TouchableOpacity>
-						<View style={{ flexDirection: 'row', gap: 3, alignItems: 'center', alignSelf: 'flex-end' }}>
-							<Text style={styles.status}>Ready to be taken</Text>
-							<Icon name="checkmark" size={16} color={'#3BC23B'}></Icon>
+						<View style={styles.statusContainer}>
+							<Text style={styles.status}>READY</Text>
+							<Icon name="checkmark" size={16} color={'green'}></Icon>
 						</View>
 					</>
 				) : (
@@ -70,11 +70,10 @@ const MedicineCard = ({ prescription }: { prescription: Prescription }) => {
 						</TouchableOpacity>
 						<View style={{ flexDirection: 'row', gap: 3, alignItems: 'center', alignSelf: 'flex-end' }}>
 							<Text style={styles.status}>Ready to be taken</Text>
-							
 						</View>
-                        <View style={styles.progress}>
-                            <View style={styles.innerProgress}></View>
-                        </View>
+						<View style={styles.progress}>
+							<View style={styles.innerProgress}></View>
+						</View>
 					</>
 				)}
 			</View>
@@ -95,11 +94,12 @@ const styles = StyleSheet.create({
 		borderRadius: 15,
 		shadowOffset: { width: 0, height: 4 },
 		shadowOpacity: 0.25,
+		height: 140,
 	},
 	name: {
 		fontFamily: 'SourceSemibold',
 		fontSize: 20,
-        maxWidth: 150
+		maxWidth: 180,
 	},
 	description: {
 		fontFamily: 'Source',
@@ -135,19 +135,32 @@ const styles = StyleSheet.create({
 		backgroundColor: '#6C63FF',
 		borderRadius: 10,
 		paddingVertical: 10,
-		paddingHorizontal: 15,
+		paddingHorizontal: 10,
 		flexDirection: 'row',
 		alignItems: 'center',
-		gap: 15,
+		gap: 10,
+		justifyContent: 'center',
 	},
 	btnText: {
 		color: 'white',
 		fontFamily: 'SourceSemibold',
 		fontSize: 20,
 	},
+	statusContainer: {
+		flexDirection: 'row',
+		gap: 3,
+		alignItems: 'center',
+		alignSelf: 'flex-end',
+        backgroundColor: 'lightgreen',
+		paddingHorizontal: 12,
+		paddingVertical: 2,
+		borderRadius: 10,
+	},
 	status: {
 		fontFamily: 'SourceSemibold',
-		fontSize: 16,
+		fontSize: 14,
+		color: 'green',
+		
 	},
 	circle: {
 		borderRadius: '100%',
@@ -158,18 +171,18 @@ const styles = StyleSheet.create({
 		alignItems: 'center',
 		overflow: 'visible',
 	},
-    progress: {
-        height: 1,
-        width: '100%',
-        backgroundColor: '#E2E0FF',
-        borderRadius: 10,
-    },
-    innerProgress: {
-        height: 1,
-        width: '100%',
-        backgroundColor: '#E2E0FF',
-        borderRadius: 10,
-        position: 'absolute',
-        left: 0
-    }
+	progress: {
+		height: 1,
+		width: '100%',
+		backgroundColor: '#E2E0FF',
+		borderRadius: 10,
+	},
+	innerProgress: {
+		height: 1,
+		width: '100%',
+		backgroundColor: '#E2E0FF',
+		borderRadius: 10,
+		position: 'absolute',
+		left: 0,
+	},
 });
