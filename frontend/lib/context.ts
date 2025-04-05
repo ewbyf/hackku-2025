@@ -6,9 +6,11 @@ export interface Prescription {
 	medication: string;
 	dosage: number;
 	vector?: string;
+	timing?: string;
 	freq: number;
 	period: number;
 	periodUnit: string;
+	takenToday: number;
 	lastTaken: string | null;
 }
 
@@ -32,5 +34,5 @@ export interface User {
 	procedures: PatientProcedure[];
 }
 
-export const global = React.createContext<{ user: User | null, updateUser: () => void }>({ user: null, updateUser: () => {} });
+export const global = React.createContext<{ user: User | null; updateUser: () => void }>({ user: null, updateUser: () => {} });
 
