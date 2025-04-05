@@ -1,8 +1,8 @@
 import { global, User } from '@/lib/context';
-import { SplashScreen, Stack } from 'expo-router';
-import { useEffect, useState } from 'react';
+import { SplashScreen, Stack, useRouter } from 'expo-router';
+import { useEffect, useState, } from 'react';
 
-import { isLoggedIn } from '@/lib/auth';
+import { isLoggedIn, logout } from '@/lib/auth';
 import api from '@/lib/axiosConfig';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { useFonts } from 'expo-font';
@@ -20,6 +20,8 @@ export default function RootLayout() {
 		...FontAwesome.font,
 	});
 
+    const router = useRouter();
+
 	useEffect(() => {
 		if (loaded) {
 			SplashScreen.hideAsync();
@@ -34,7 +36,11 @@ export default function RootLayout() {
 		const loggedIn = await isLoggedIn();
 
 		if (loggedIn) {
-			const user = await api.get('/me').then((res) => res.data);
+			const user = await api.get('/me').then((res) => res.data).catch(async(err) => {
+                await logout();
+                router.replace('/')
+            });
+
 
 			setCtxState(user);
 		}

@@ -1,9 +1,10 @@
 import AccordionItem from '@/components/AccordionItem';
 import Title from '@/components/Title';
 import TopBar from '@/components/TopBar';
+import { logout } from '@/lib/auth';
 import { global } from '@/lib/context';
 import { Redirect, useRouter } from 'expo-router';
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
@@ -12,7 +13,7 @@ export default function Documents() {
 	const { user } = useContext(global);
 	const [selected, setSelected] = useState<number | null>(null);
 
-	if (!user) return <Redirect href="/login" />;
+	if (!user) return <Redirect href="/" />
 
 	return (
 		<SafeAreaView style={styles.container}>
