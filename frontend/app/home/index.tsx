@@ -7,7 +7,7 @@ export default function HomeScreen() {
   return (
     <View>
       <Text>Welcome Home!</Text>
-      <Button title="Go to Extra Page" onPress={() => router.push('/extra')} />
+      <Button title="Go to drug info Page" onPress={() => router.push('/drug')} />
     </View>
   );
 }

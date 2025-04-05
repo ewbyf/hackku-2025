@@ -26,7 +26,7 @@ export default BackArrow;
 const styles = StyleSheet.create({
 	container: {
 		position: 'absolute',
-		top: 75,
+		top: 25,
 		left: 25,
 		backgroundColor: '#6C63FF',
 		shadowOffset: { width: 0, height: 4 },

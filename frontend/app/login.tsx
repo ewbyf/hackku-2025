@@ -4,6 +4,7 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import { StyleSheet, TouchableOpacity, View, Text, TextInput, SafeAreaView, Button } from 'react-native';
 import { useState } from 'react';
 import BackArrow from '@/components/BackArrow';
+import api from '@/lib/axiosConfig';
 
 export default function Login() {
 	const router = useRouter();
@@ -11,14 +12,23 @@ export default function Login() {
 	const [password, setPassword] = useState('');
 
 	const handleLogin = async () => {
-		
+		api.post('/login', {
+			email,
+			password,
+		})
+			.then((resp) => {
+				console.log(resp);
+			})
+			.catch((err) => {
+				console.log(err);
+			});
 		router.replace('/home');
 	};
 
 	return (
 		<SafeAreaView style={styles.container}>
-			<BackArrow />
 			<KeyboardAwareScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ flex: 1, padding: 30 }}>
+				<BackArrow />
 				<View style={{ gap: 50, justifyContent: 'flex-end', height: '100%' }}>
 					<Text style={styles.title}>Let's get you signed in</Text>
 					<View style={{ gap: 20 }}>
@@ -44,12 +54,19 @@ export default function Login() {
 									setPassword(e);
 								}}
 								value={password}
+                                secureTextEntry={true}
 							></TextInput>
-                            <Text style={styles.swapLabel}>Don't have an account? <Link style={{color: 'white', textDecorationLine: 'underline', fontFamily: 'SourceBold'}} href="/signup">Sign up</Link></Text>
+							
 						</View>
 						<TouchableOpacity style={styles.btn} onPress={handleLogin}>
 							<Text style={styles.btnText}>Sign in</Text>
 						</TouchableOpacity>
+                        <Text style={styles.swapLabel}>
+								Don't have an account?{' '}
+								<Link style={{ color: 'white', textDecorationLine: 'underline', fontFamily: 'SourceBold' }} href="/signup">
+									Sign up
+								</Link>
+							</Text>
 					</View>
 				</View>
 			</KeyboardAwareScrollView>
@@ -101,11 +118,10 @@ const styles = StyleSheet.create({
 		fontFamily: 'SourceBold',
 		fontSize: 14,
 	},
-    swapLabel: {
-        color: 'white',
+	swapLabel: {
+		color: 'white',
 		fontFamily: 'Source',
 		fontSize: 15,
-        alignSelf: 'flex-end',
-        marginTop: 2
-    }
+        textAlign: 'center'
+	},
 });

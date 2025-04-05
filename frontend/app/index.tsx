@@ -27,6 +27,9 @@ export default function Landing() {
 						<Text style={styles.description}>All the help you need is just one tap away</Text>
 					</View>
 					<View style={{gap: 15}}>
+						<TouchableOpacity style={styles.btn} onPress={() => router.navigate('/home')}>
+							<Text style={styles.btnText}>JUMP TO HOME PAGE!</Text>
+						</TouchableOpacity>
 						<TouchableOpacity style={styles.btn} onPress={() => router.navigate('/login')}>
 							<Text style={styles.btnText}>I have an account</Text>
 						</TouchableOpacity>
