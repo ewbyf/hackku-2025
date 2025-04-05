@@ -2,7 +2,6 @@ import { StyleSheet, TouchableOpacity, View, Text, TextInput, SafeAreaView, Butt
 import Sun from 'react-native-vector-icons/Ionicons';
 import Fork from 'react-native-vector-icons/Ionicons';
 import Moon from 'react-native-vector-icons/Ionicons';
-import { Prescription } from '@/interfaces/Prescription';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 interface Props {
