@@ -2,6 +2,7 @@ import { useRouter } from 'expo-router';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { StyleSheet, TouchableOpacity, View, Text, TextInput, SafeAreaView, Button } from 'react-native';
 import TopBar from '@/components/TopBar';
+import Title from '@/components/Title';
 
 export default function Home() {
     const router = useRouter();
@@ -10,6 +11,7 @@ export default function Home() {
         <SafeAreaView style={styles.container}>
             <TopBar/>
             <KeyboardAwareScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ flex: 1, padding: 30 }}>
+                <Title>Today</Title>
                 <Text>Login</Text>
             </KeyboardAwareScrollView>
         </SafeAreaView>
