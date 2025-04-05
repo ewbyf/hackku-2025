@@ -25,17 +25,17 @@ const styles = StyleSheet.create({
 		alignItems: 'center',
 		justifyContent: 'space-between',
         paddingHorizontal: 20,
-        paddingVertical: 10
+        paddingVertical: 10,
 	},
     btn: {
         backgroundColor: 'red',
-        paddingHorizontal: 30,
+        paddingHorizontal: 25,
         paddingVertical: 15,
         borderRadius: 15,
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
-        gap: 5
+        gap: 10
     },
     btnText: {
         fontFamily: "SourceBold",

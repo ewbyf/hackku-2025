@@ -7,13 +7,15 @@ import { Prescription } from '@/lib/context';
 import React from 'react';
 
 const MedicineCard = ({ prescription }: { prescription: Prescription }) => {
-	const takeMed = () => {};
+	const takeMed = () => {
+        
+    };
 
 	return (
 		<TouchableOpacity style={styles.container}>
 			<View style={{ justifyContent: 'space-between', gap: 10 }}>
 				<View>
-					<Text style={styles.name}>{prescription.medication}</Text>
+					<Text style={styles.name} numberOfLines={2}>{prescription.medication}</Text>
 					{/* <Text style={styles.description}>{prescription.de}</Text> */}
 				</View>
 				<View style={{ gap: 3 }}>
@@ -96,7 +98,8 @@ const styles = StyleSheet.create({
 	},
 	name: {
 		fontFamily: 'SourceSemibold',
-		fontSize: 26,
+		fontSize: 20,
+        maxWidth: 150
 	},
 	description: {
 		fontFamily: 'Source',
