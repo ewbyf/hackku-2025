@@ -17,5 +17,14 @@ export class AIService {
 			})
 			.then((res) => res.text!);
 	}
+
+	public async translate(language: string, text: string): Promise<string> {
+		return this.ai.models
+			.generateContent({
+				model: 'gemini-2.0-flash',
+				contents: `Translate the following into ${language} and only output the translated text: ${text}`
+			})
+			.then((res) => res.text!);
+	}
 }
 

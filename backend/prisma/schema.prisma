@@ -30,7 +30,7 @@ model Prescription {
     medication String
     dosage     Int
     vector     String?
-    timing     String
+    timing     String?
     freq       Int
     period     Int
     periodUnit String

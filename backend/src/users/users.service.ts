@@ -37,6 +37,8 @@ export class UsersService implements AuthDataSource {
 	}
 
 	public async register({ email, password }: RegisterDTO): Promise<MeUser> {
+		email = email.toLowerCase();
+
 		const id = createId();
 		const hashedPassword = hashSync(password, genSaltSync());
 

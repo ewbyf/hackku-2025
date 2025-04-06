@@ -1,5 +1,6 @@
-import { Body, Controller, Get, Post, UnauthorizedException } from '@nestjs/common';
+import { Body, Controller, Get, Post, Query, UnauthorizedException } from '@nestjs/common';
 import { User } from '@prisma/client';
+import { AIService } from './ai/ai.service';
 import { Protected } from './auth/protected.decorator';
 import { LoginDTO, RegisterDTO, TakePrescriptionDTO } from './users/users.dtos';
 import { meUser, MeUser } from './users/users.models';
@@ -8,7 +9,7 @@ import { ReqUser } from './utils/decorators/user.decorator';
 
 @Controller()
 export class AppController {
-	constructor(private readonly users: UsersService) {}
+	constructor(private readonly users: UsersService, private readonly ai: AIService) {}
 
 	@Get('/me')
 	@Protected()
@@ -34,6 +35,12 @@ export class AppController {
 	@Protected()
 	public async takePrescription(@ReqUser() user: User, @Body() { prescriptionId }: TakePrescriptionDTO): Promise<void> {
 		return this.users.take(user, prescriptionId);
+	}
+
+	@Get('/translate')
+	@Protected()
+	public async translate(@Query('language') language: string, @Query('text') text: string): Promise<string> {
+		return this.ai.translate(language, text);
 	}
 }
 
