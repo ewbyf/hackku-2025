@@ -1,5 +1,6 @@
 import api from '@/lib/axiosConfig';
 import { global, Prescription } from '@/lib/context';
+import Notifications from 'expo-notifications';
 import { useRouter } from 'expo-router';
 import React, { useContext, useEffect, useState } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
@@ -23,10 +24,22 @@ const MedicineCard = ({ prescription, inspect }: { prescription: Prescription; i
 
 		const interval = setInterval(() => {
 			setTime((prev) => {
+				if (prev <= 5 * 60 * 1000)
+					Notifications.scheduleNotificationAsync({
+						content: {
+							title: `It is almost time to take your ${prescription.medication}!`
+						},
+						trigger: {
+							date: Date.now(),
+							type: Notifications.SchedulableTriggerInputTypes.DATE
+						}
+					});
+
 				if (prev <= 1) {
 					clearInterval(interval);
 					return 0;
 				}
+
 				return prev - 1;
 			});
 		}, 1000);
@@ -130,7 +143,7 @@ const styles = StyleSheet.create({
 		shadowOffset: { width: 0, height: 3 },
 		shadowRadius: 5,
 		shadowOpacity: 0.25,
-		shadowColor: '#6C63FF',
+		shadowColor: '#6C63FF'
 	},
 	name: {
 		fontFamily: 'SourceSemibold',
