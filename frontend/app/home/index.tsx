@@ -38,9 +38,9 @@ export default function Home() {
 				<TopBar />
 				<Text>{hasEvent}</Text>
 				<KeyboardAwareScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ padding: 20, paddingBottom: 80 }}>
-					<Title>Today</Title>
+					<Title>Today's Meds</Title>
 					<View style={{ gap: 10 }}>
-						<Text style={styles.sectionTitle}>Not Started</Text>
+						<Text style={styles.sectionTitle}>🚫  Not Started</Text>
 						<View style={{ gap: 20, marginBottom: 20 }}>
 							{user?.prescriptions[0].map((prescription, i) => (
 								<MedicineCard key={i} prescription={prescription} />
@@ -48,7 +48,7 @@ export default function Home() {
 						</View>
 					</View>
 					<View style={{ gap: 10 }}>
-						<Text style={styles.sectionTitle}>In Progress</Text>
+						<Text style={styles.sectionTitle}>⏳  In Progress</Text>
 						<View style={{ gap: 20, marginBottom: 20 }}>
 							{user?.prescriptions[1].map((prescription, i) => (
 								<MedicineCard key={i} prescription={prescription} />
@@ -56,7 +56,7 @@ export default function Home() {
 						</View>
 					</View>
 					<View style={{ gap: 10 }}>
-						<Text style={styles.sectionTitle}>Finished</Text>
+						<Text style={styles.sectionTitle}>✅  Finished</Text>
 						<View style={{ gap: 20 }}>
 							{user?.prescriptions[2].map((prescription, i) => (
 								<MedicineCard key={i} prescription={prescription} />
@@ -80,8 +80,12 @@ const styles = StyleSheet.create({
 		overflow: 'hidden',
 	},
 	sectionTitle: {
-		color: '#6C63FF',
-		fontFamily: 'SourceBold',
-		fontSize: 28,
+		color: 'white',
+		fontFamily: 'SourceSemibold',
+		fontSize: 32,
+        backgroundColor: '#6C63FF',
+        padding: 10,
+        paddingHorizontal: 20,
+        borderRadius: 15,
 	},
 });

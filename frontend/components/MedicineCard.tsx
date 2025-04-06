@@ -143,8 +143,10 @@ const styles = StyleSheet.create({
 		paddingVertical: 12,
 		backgroundColor: 'white',
 		borderRadius: 15,
-		shadowOffset: { width: 0, height: 4 },
+		shadowOffset: { width: 0, height: 3 },
+        shadowRadius: 5,
 		shadowOpacity: 0.25,
+        shadowColor: '#6C63FF',
 		height: 150,
 	},
 	name: {

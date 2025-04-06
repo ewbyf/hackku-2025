@@ -5,7 +5,7 @@ import LogoSVG from './svgs/Logo';
 const TopBar = () => {
 	return (
 		<View style={styles.container}>
-			<View style={{ flexDirection: 'row' }}>
+			<View style={{ flexDirection: 'row', gap: 5, alignItems: 'center' }}>
 				<LogoSVG/>
 				<Text style={styles.logoText}>ClearHelp</Text>
 			</View>
@@ -46,11 +46,8 @@ const styles = StyleSheet.create({
     },
 	logoText: {
         fontFamily: "SourceBold",
-        fontSize: 28,
+        fontSize: 26,
         color: '#6C63FF',
-		letterSpacing: 0.5,
+		letterSpacing: 0.2,
 	},
-	logo: {
-
-	}
 });
