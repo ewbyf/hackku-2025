@@ -1,11 +1,11 @@
 import { View, Text, Button, StyleSheet, TouchableOpacity } from 'react-native';
 import Logo from 'react-native-vector-icons/Ionicons';
 
-const Title = ({ children }: {children: string}) => {
+const Title = ({ noUnderline, children }: {noUnderline ?: boolean, children: string}) => {
     return (
-        <View style={{marginBottom: 20}}>
+        <View style={{marginBottom: !noUnderline ? 20 : 0}}>
             <Text style={styles.txt}>{children}</Text>
-            <View style={styles.bar}></View>
+          {!noUnderline &&  <View style={styles.bar}></View>}
         </View>
     );
 }
@@ -16,7 +16,7 @@ const styles = StyleSheet.create({
     txt: {
         fontFamily: 'SourceBold',
         fontSize: 42,
-        color: '#6C63FF'
+        color: '#6C63FF',
     },
     bar: {
         height: 6,

@@ -31,7 +31,6 @@ const MedicineCard = ({ prescription, inspect }: { prescription: Prescription; i
 			});
 		}, 1000);
 
-		// Cleanup on unmount or prescription change
 		return () => clearInterval(interval);
 	}, [prescription]);
 
@@ -65,31 +64,7 @@ const MedicineCard = ({ prescription, inspect }: { prescription: Prescription; i
 					<Text style={styles.name} numberOfLines={2}>
 						{prescription.medication}
 					</Text>
-					{/* <Text style={styles.description}>{prescription.de}</Text> */}
 				</View>
-				{/* <View style={{ gap: 3 }}>
-					<Text style={styles.take}>TAKE DURING</Text>
-					<View style={{ flexDirection: 'row', gap: 8 }}>
-						<Sun
-							name="sunny"
-							color={'white'}
-							size={28}
-							style={prescription.timing?.toLowerCase() === 'morning' ? styles.sunActive : styles.emojiInactive}
-						></Sun>
-						<Fork
-							name="restaurant"
-							color={'yellow'}
-							size={28}
-							style={prescription.timing?.toLowerCase() === 'meal' ? styles.mealActive : styles.emojiInactive}
-						></Fork>
-						<Moon
-							name="moon"
-							color={'white'}
-							size={28}
-							style={prescription.timing?.toLowerCase() === 'before bed' ? styles.moonActive : styles.emojiInactive}
-						></Moon>
-					</View>
-				</View> */}
 				<Text style={[styles.interval, { alignSelf: 'flex-start', backgroundColor: '#FFE0FD', color: '#E732FF' }]}>
 					Every {prescription.period} {prescription.periodUnit === 'h' ? 'hour(s)' : 'day(s)'}
 				</Text>
@@ -98,17 +73,14 @@ const MedicineCard = ({ prescription, inspect }: { prescription: Prescription; i
 				</Text>
 			</View>
 			<View style={{ justifyContent: 'space-between', gap: 10 }}>
-				{/* <Text style={styles.interval}>
-					Every {prescription.period} {prescription.periodUnit === 'h' ? 'hour(s)' : 'day(s)'}
-				</Text> */}
 				{prescription.freq - prescription.takenToday == 0 ? (
 					<>
 						<TouchableOpacity style={styles.btn} onPress={takeMed} disabled={prescription.freq - prescription.takenToday == 0}>
-							{prescription.freq - prescription.takenToday == 0 && <Text style={styles.btnText}>Done</Text>}
+							{prescription.freq - prescription.takenToday == 0 && <Text style={styles.btnText}>I took it</Text>}
 						</TouchableOpacity>
-						<View style={[styles.statusContainer, { backgroundColor: '#FFF8C9' }]}>
-							<Text style={[styles.status, { color: '#F9AE00' }]}>DONE FOR TODAY</Text>
-							<Icon name="happy-outline" size={16} color={'#F9AE00'}></Icon>
+						<View style={[styles.statusContainer, { backgroundColor: '#FFF3A3' }]}>
+							<Text style={[styles.status, { color: '#F99500' }]}>DONE FOR TODAY</Text>
+							<Icon name="happy-outline" size={16} color={'#F99500'}></Icon>
 						</View>
 					</>
 				) : prescription.lastTaken === null ||
