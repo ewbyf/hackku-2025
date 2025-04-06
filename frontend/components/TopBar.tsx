@@ -10,7 +10,7 @@ const TopBar = ({logo} : {logo?: boolean}) => {
 
 	return (
 		<View style={styles.container}>
-			{logo &&<View style={{ flexDirection: 'row', gap: 5, alignItems: 'center' }}>
+			{!logo &&<View style={{ flexDirection: 'row', gap: 5, alignItems: 'center' }}>
 				<LogoSVG/>
 				<Text style={styles.logoText}>ClearHelp</Text>
 			</View>}

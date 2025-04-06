@@ -80,7 +80,11 @@ export default function Home() {
 					)}
 					{user?.prescriptions[2] && user?.prescriptions[2].length > 0 && (
 						<View style={{ gap: 10 }}>
-							<Text style={styles.sectionTitle}>🏁 Finished</Text>
+                            <View style={styles.titleContainer}>
+								<Clock color="white" />
+								<Text style={styles.sectionTitle}>Finished</Text>
+							</View>
+							
 							<View style={{ gap: 20 }}>
 								{user?.prescriptions[2].map((prescription, i) => (
 									<MedicineCard key={i} prescription={prescription} />

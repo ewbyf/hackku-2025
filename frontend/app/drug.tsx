@@ -77,7 +77,7 @@ export default function ExtraScreen() {
 		<ImageBackground source={require('../assets/images/bg.png')} imageStyle={{ resizeMode: 'cover' }} style={{ height: '100%', width: '100%' }}>
 			<SafeAreaView style={styles.container}>
 				<BackArrow />
-				<TopBar logo={false} />
+				<TopBar logo={true} />
 				<KeyboardAwareScrollView
 					showsVerticalScrollIndicator={false}
 					contentContainerStyle={{ padding: 20, paddingBottom: 40, justifyContent: 'space-between', height: '100%' }}
