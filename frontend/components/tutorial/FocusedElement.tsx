@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
 	caret: {
 		position: 'absolute',
 		left: '50%',
-		top: -2 * Math.sqrt(2),
+		top: -6 * Math.sqrt(2),
 		width: 0,
 		height: 0,
 		borderLeftWidth: 16,
@@ -69,6 +69,6 @@ const styles = StyleSheet.create({
 		borderLeftColor: 'transparent',
 		borderRightColor: 'transparent',
 		borderTopColor: 'white',
-		transform: [{ translateX: -2 }, { rotate: '45deg' }],
+		transform: [{ translateX: -2 }, { rotate: '180deg'  }],
 	},
 });
