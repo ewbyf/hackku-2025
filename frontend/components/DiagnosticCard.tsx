@@ -17,7 +17,7 @@ const DiagnosisCard = ({ name, doctor, date, progress }: Props) => {
 			{!info && (
 				<>
 					<TouchableOpacity onPress={() => setInfo(!info)} style={styles.infoIcon}>
-						<Ionicons name="information-circle" size={24} color="black" />
+						<Ionicons name="information-circle" size={32} color="#6C63FF" />
 					</TouchableOpacity>
 
 					<View style={styles.row}>
@@ -41,7 +41,7 @@ const DiagnosisCard = ({ name, doctor, date, progress }: Props) => {
 			{info && (
 				<>
 					<TouchableOpacity onPress={() => setInfo(!info)} style={styles.infoIcon}>
-						<Ionicons name="information-circle" size={24} color="black" />
+						<Ionicons name="information-circle" size={32} color="#6C63FF" />
 					</TouchableOpacity>
 
 					<View style={styles.row}>

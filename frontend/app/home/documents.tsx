@@ -29,7 +29,7 @@ export default function Documents() {
 						{user.procedures.map((proc, i) => (
 							<AccordionItem
 								short={
-									<Text style={styles.summary} numberOfLines={1} minimumFontScale={0.66} adjustsFontSizeToFit allowFontScaling>
+									<Text style={styles.summary} numberOfLines={2}>
 										{proc.explanation.technical}
 									</Text>
 								}
@@ -38,6 +38,7 @@ export default function Documents() {
 								onClosed={() => setSelected(null)}
 								key={i}
 							>
+                                
 								<Text style={styles.details}>{proc.explanation.explanation}</Text>
 								<View style={styles.tts}>
 									<SelectDropdown
@@ -88,9 +89,8 @@ const styles = StyleSheet.create({
 	summary: {
 		color: 'white',
 		fontSize: 24,
-		textOverflow: 'ellipsis',
-		overflow: 'hidden',
-		maxWidth: 250,
+		fontFamily: 'SourceSemibold',
+		maxWidth: 275,
 	},
 	list: {
 		display: 'flex',
@@ -98,8 +98,9 @@ const styles = StyleSheet.create({
 		gap: 10,
 	},
 	details: {
-		fontSize: 18,
-		lineHeight: 24,
+		fontFamily: 'Source',
+		fontSize: 19,
+		lineHeight: 28,
 	},
 	tts: {
 		display: 'flex',
@@ -141,8 +142,8 @@ const styles = StyleSheet.create({
 		paddingRight: 24,
 	},
 	dropdownItemLast: {
-		borderTopLeftRadius: 16,
-		borderTopRightRadius: 16,
+		// borderTopLeftRadius: 16,
+		// borderTopRightRadius: 16,
 	},
 	open: {
 		borderTopLeftRadius: 0,

@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
     },
     bar: {
         height: 6,
-        width: 70,
+        width: 80,
         backgroundColor: '#6C63FF'
     }
 });
