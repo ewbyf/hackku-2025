@@ -62,7 +62,9 @@ const styles = StyleSheet.create({
 		display: 'flex',
 		flex: 1,
 		position: 'relative',
-		zIndex: 0
+		zIndex: 0,
+		height: '100%',
+		width: '100%'
 	},
 	blurContainer: {
 		padding: 20,

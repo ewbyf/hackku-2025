@@ -1,13 +1,19 @@
 import Phase1 from '@/components/tutorial/Phase1';
-import React from 'react';
+import React, { useMemo, useState } from 'react';
 import { StyleSheet } from 'react-native';
 
 export interface TutorialPhaseProps {
 	next: () => void;
 }
 
+const phases: React.FC<TutorialPhaseProps>[] = [Phase1];
+
 export default function Tutorial() {
-	return <Phase1 next={() => console.log('next')} />;
+	const [phase, setPhase] = useState<number>(0);
+
+	const Phase = useMemo(() => phases[phase], [phase]);
+
+	return <Phase next={() => console.log('next')} />;
 }
 
 const styles = StyleSheet.create({
