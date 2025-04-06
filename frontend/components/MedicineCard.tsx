@@ -50,14 +50,15 @@ const MedicineCard = ({ prescription, inspect }: { prescription: Prescription; i
 	return (
 		<TouchableOpacity
 			style={[styles.container, { opacity: prescription.freq - prescription.takenToday == 0 ? 0.5 : 1 }]}
-			onPress={() =>
+			onPress={
 				inspect ??
-				router.push({
-					pathname: '/drug',
-					params: {
-						id: prescription.id
-					}
-				})
+				(() =>
+					router.push({
+						pathname: '/drug',
+						params: {
+							id: prescription.id
+						}
+					}))
 			}>
 			<View style={{ justifyContent: 'space-between', gap: 5 }}>
 				<View>

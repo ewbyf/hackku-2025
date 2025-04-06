@@ -1,5 +1,6 @@
 import Phase1 from '@/components/tutorial/Phase1';
-import React, { useMemo, useState } from 'react';
+import { tutorial } from '@/lib/context';
+import React, { useContext, useEffect, useMemo, useState } from 'react';
 import { StyleSheet } from 'react-native';
 
 export interface TutorialPhaseProps {
@@ -10,10 +11,17 @@ const phases: React.FC<TutorialPhaseProps>[] = [Phase1];
 
 export default function Tutorial() {
 	const [phase, setPhase] = useState<number>(0);
+	const { target } = useContext(tutorial);
 
 	const Phase = useMemo(() => phases[phase], [phase]);
 
-	return <Phase next={() => console.log('next')} />;
+	useEffect(() => {
+		if (phase === phases.length - 1) {
+			target('history');
+		}
+	}, [phase]);
+
+	return <Phase next={() => phase !== phases.length - 1 && setPhase(phase + 1)} />;
 }
 
 const styles = StyleSheet.create({
