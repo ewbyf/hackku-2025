@@ -25,14 +25,14 @@ const Modal: React.FC<ModalProps> = ({ open, phases, onClose }) => {
 								<View />
 							) : (
 								<TouchableWithoutFeedback onPress={() => setPhase((phase) => phase - 1)}>
-									<Icon name="chevron-left" />
+									<Icon name="chevron-back-outline" size={48} />
 								</TouchableWithoutFeedback>
 							)}
 							{phase === phases.length - 1 ? (
 								<View />
 							) : (
 								<TouchableWithoutFeedback onPress={() => setPhase((phase) => phase + 1)}>
-									<Icon name="chevron-right" />
+									<Icon name="chevron-forward-outline" size={48} />
 								</TouchableWithoutFeedback>
 							)}
 						</View>
@@ -50,7 +50,13 @@ const styles = StyleSheet.create({
 		backgroundColor: 'rgba(0, 0, 0, 0.7)',
 		backdropFilter: 'blur',
 		height: '100%',
-		width: '100%'
+		width: '100%',
+		position: 'absolute',
+		top: 0,
+		left: 0,
+		display: 'flex',
+		flexDirection: 'column',
+		alignItems: 'center'
 	},
 	controls: {
 		display: 'flex',
@@ -78,7 +84,10 @@ const styles = StyleSheet.create({
 		gap: 10,
 		justifyContent: 'center',
 		shadowOffset: { width: 0, height: 4 },
-		shadowOpacity: 0.25
+		shadowOpacity: 0.25,
+		position: 'absolute',
+		top: 0,
+		right: 0
 	},
 	btnText: {
 		color: 'white',

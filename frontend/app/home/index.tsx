@@ -1,4 +1,5 @@
 import MedicineCard from '@/components/MedicineCard';
+import Modal from '@/components/Modal';
 import PriorityCard from '@/components/PriorityCard';
 import PriorityCard2 from '@/components/PriorityCard2';
 import Checkmark from '@/components/svgs/Checkmark';
@@ -106,6 +107,7 @@ export default function Home() {
 					)}
 				</KeyboardAwareScrollView>
 			</SafeAreaView>
+			<Modal open onClose={() => {}} phases={[<Text>hi</Text>, <Text>hi</Text>, <Text>hi</Text>]} />
 		</ImageBackground>
 	);
 }
