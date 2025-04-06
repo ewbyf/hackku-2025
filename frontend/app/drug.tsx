@@ -102,7 +102,7 @@ export default function ExtraScreen() {
 							)}
 						</View>
 
-						<Text style={styles.description}>description</Text>
+						<Text style={styles.description}></Text>
 					</View>
 
 					<View style={{ gap: 10 }}>

@@ -80,9 +80,9 @@ const MedicineCard = ({ prescription }: { prescription: Prescription }) => {
 						<TouchableOpacity style={styles.btn} onPress={takeMed} disabled={prescription.freq - prescription.takenToday == 0}>
 							{prescription.freq - prescription.takenToday == 0 && <Text style={styles.btnText}>I took it</Text>}
 						</TouchableOpacity>
-						<View style={[styles.statusContainer, { backgroundColor: '#FFF8C9' }]}>
-							<Text style={[styles.status, { color: '#F9AE00' }]}>DONE FOR TODAY</Text>
-							<Icon name="happy-outline" size={16} color={'#F9AE00'}></Icon>
+						<View style={[styles.statusContainer, { backgroundColor: '#FFF3A3' }]}>
+							<Text style={[styles.status, { color: '#F99500' }]}>DONE FOR TODAY</Text>
+							<Icon name="happy-outline" size={16} color={'#F99500'}></Icon>
 						</View>
 					</>
 				) : prescription.lastTaken === null ||
