@@ -84,7 +84,10 @@ export class UsersService implements AuthDataSource {
 							}
 
 							return {
-								medication: prescription.resource.medicationCodeableConcept.coding[0].display,
+								medication: prescription.resource.medicationCodeableConcept.coding[0].display
+									.split(' ')
+									.map((word) => word[0].toUpperCase() + word.slice(1))
+									.join(' '),
 								dosage,
 								vector,
 								timing,
