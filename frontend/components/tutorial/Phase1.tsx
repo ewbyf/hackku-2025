@@ -1,12 +1,15 @@
 import { TutorialPhaseProps } from '@/app/tutorial';
-import { ImageBackground, SafeAreaView, StyleSheet, Text, TouchableWithoutFeedback, View } from 'react-native';
+import { ImageBackground, SafeAreaView, StyleSheet, Text, useWindowDimensions, View } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import MedicineCard from '../MedicineCard';
 import Title from '../Title';
 import TopBar from '../TopBar';
 import Checkmark from '../svgs/Checkmark';
+import FocusedElement from './FocusedElement';
 
 const Phase1: React.FC<TutorialPhaseProps> = ({ next }) => {
+	const { height, width } = useWindowDimensions();
+
 	return (
 		<ImageBackground source={require('../../assets/images/bg.png')} imageStyle={{ resizeMode: 'cover' }} style={{ height: '100%', width: '100%' }}>
 			<SafeAreaView style={styles.container}>
@@ -19,7 +22,7 @@ const Phase1: React.FC<TutorialPhaseProps> = ({ next }) => {
 							<Text style={styles.sectionTitle}>Ready to Take</Text>
 						</View>
 						<View style={{ gap: 20, marginBottom: 20 }}>
-							<TouchableWithoutFeedback style={{ zIndex: 2, position: 'relative' }}>
+							<FocusedElement description="The home page displays your prescriptions.">
 								<MedicineCard
 									inspect={next}
 									prescription={{
@@ -35,22 +38,11 @@ const Phase1: React.FC<TutorialPhaseProps> = ({ next }) => {
 										lastTaken: null
 									}}
 								/>
-							</TouchableWithoutFeedback>
+							</FocusedElement>
 						</View>
 					</View>
 				</KeyboardAwareScrollView>
 			</SafeAreaView>
-			<View
-				style={{
-					width: '100%',
-					height: '100%',
-					position: 'absolute',
-					top: 0,
-					left: 0,
-					zIndex: 1,
-					backgroundColor: 'rgba(0, 0, 0, 0.6)'
-				}}
-			/>
 		</ImageBackground>
 	);
 };
