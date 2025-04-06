@@ -11,7 +11,6 @@ export default function History() {
 	return (
 		<SafeAreaView style={styles.container}>
 			<TopBar />
-
 			<CustomMedicationTimeline />
 		</SafeAreaView>
 	);
