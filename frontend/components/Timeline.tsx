@@ -11,21 +11,67 @@ interface TimelineItem {
 	circleColor?: string;
 	lineColor?: string;
 	icon?: string;
+	prerequisites?: string[];
 }
 
 const diagnosisData: TimelineItem[] = [
 	{
-		name: 'Diagnosis 2',
-		doctor: 'Dr. Kim',
-		date: '04/03/2025',
-		progress: 'In Progress',
+		name: 'Post-Surgery Blood Test',
+		doctor: 'Lab Technician',
+		date: '04/12/2025',
+		progress: 'Scheduled',
+		prerequisites: ['Surgical Procedure: Appendectomy'],
 		circleColor: '#6C63FF',
+		lineColor: '#6C63FF',
 	},
 	{
-		name: 'Diagnosis 1',
+		name: 'Follow-up Appointment',
+		doctor: 'Dr. Kim',
+		date: '04/10/2025',
+		progress: 'Scheduled',
+		prerequisites: ['Surgical Procedure: Appendectomy'],
+		circleColor: '#6C63FF',
+		lineColor: '#6C63FF',
+	},
+	{
+		name: 'Surgical Procedure: Appendectomy',
+		doctor: 'Dr. Kim',
+		date: '04/05/2025',
+		progress: 'Completed',
+		prerequisites: ['Appointment with Dr. Kim'],
+	},
+	{
+		name: "Doctor's Appointment",
+		doctor: 'Dr. Kim',
+		date: '03/30/2025',
+		progress: 'Completed',
+		prerequisites: ['Blood Test - Liver Function'],
+	},
+	{
+		name: 'Blood Test - Liver Function',
+		doctor: 'Lab Technician',
+		date: '03/27/2025',
+		progress: 'Completed',
+		prerequisites: ['CT Scan (Abdomen)'],
+	},
+	{
+		name: 'CT Scan (Abdomen)',
+		doctor: 'Dr. Kim',
+		date: '03/25/2025',
+		progress: 'Completed',
+	},
+	{
+		name: "Doctor's Appointment",
 		doctor: 'Dr. Bryant',
-		date: '04/01/2025',
-		progress: 'Resolved',
+		date: '03/22/2025',
+		progress: 'Completed',
+		prerequisites: ['Blood Test - CBC'],
+	},
+	{
+		name: 'Blood Test - CBC',
+		doctor: 'Lab Technician',
+		date: '03/20/2025',
+		progress: 'Completed',
 	},
 ];
 
