@@ -55,7 +55,9 @@ export default function Documents() {
 										</View>
 									)}
 								/>
-								<TouchableOpacity style={styles.btn} onPress={() => speak(proc.explanation.explanation)}>
+								<TouchableOpacity
+									style={styles.btn}
+									onPress={() => speak(proc.explanation.explanation, { language: language === 'English' ? 'en' : 'es-419' })}>
 									<Text style={{ color: 'white', fontSize: 18 }}>Listen</Text>
 								</TouchableOpacity>
 							</View>
