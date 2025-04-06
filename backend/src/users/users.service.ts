@@ -30,6 +30,8 @@ export class UsersService implements AuthDataSource {
 	}
 
 	public async login({ email, password }: LoginDTO): Promise<MeUser | null> {
+		email = email.toLowerCase();
+
 		const user = await this.db.user.findUnique({ where: { email } });
 
 		// avoid leaking existence data (via timing)
