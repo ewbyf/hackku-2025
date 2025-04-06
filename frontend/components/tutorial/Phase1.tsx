@@ -32,25 +32,25 @@ const Phase1: React.FC<TutorialPhaseProps> = ({ next }) => {
 										period: 1,
 										periodUnit: 'd',
 										takenToday: 0,
-										lastTaken: null
+										lastTaken: null,
 									}}
 								/>
 							</TouchableWithoutFeedback>
 						</View>
 					</View>
 				</KeyboardAwareScrollView>
-				<View
-					style={{
-						width: window.innerWidth,
-						height: window.innerHeight,
-						position: 'absolute',
-						top: 0,
-						left: 0,
-						zIndex: 1,
-						backgroundColor: 'rgba(0, 0, 0, 0.6)'
-					}}
-				/>
 			</SafeAreaView>
+			<View
+				style={{
+					width: '100%',
+					height: '100%',
+					position: 'absolute',
+					top: 0,
+					left: 0,
+					zIndex: 1,
+					backgroundColor: 'rgba(0, 0, 0, 0.6)',
+				}}
+			/>
 		</ImageBackground>
 	);
 };
@@ -62,17 +62,17 @@ const styles = StyleSheet.create({
 		display: 'flex',
 		flex: 1,
 		position: 'relative',
-		zIndex: 0
+		zIndex: 0,
 	},
 	blurContainer: {
 		padding: 20,
 		borderRadius: 10,
-		overflow: 'hidden'
+		overflow: 'hidden',
 	},
 	sectionTitle: {
 		color: 'white',
 		fontFamily: 'SourceSemibold',
-		fontSize: 20
+		fontSize: 20,
 	},
 	titleContainer: {
 		backgroundColor: '#544FB1',
@@ -83,7 +83,6 @@ const styles = StyleSheet.create({
 		alignSelf: 'flex-start',
 		flexDirection: 'row',
 		alignItems: 'center',
-		gap: 8
-	}
+		gap: 8,
+	},
 });
-
