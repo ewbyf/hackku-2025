@@ -11,35 +11,37 @@ interface ModalProps {
 
 const Modal: React.FC<ModalProps> = ({ open, phases, onClose }) => {
 	const [phase, setPhase] = useState<number>(0);
-    const router = useRouter();
+	const router = useRouter();
 
 	return (
 		open && (
 			<View style={styles.backdrop}>
 				<View style={{ height: '100%', display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
 					<SafeAreaView style={styles.body}>
-						{/* <TouchableOpacity style={styles.btn} onPress={onClose}>
-							<Text style={styles.btnText}>Skip</Text>
-						</TouchableOpacity> */}
 						{phases[phase]}
+						<View style={{ position: 'absolute', flexDirection: 'row', gap: 10, left: '50%', transform: [{ translateX: -50 }], bottom: 125 }}>
+							<View style={[styles.progressBar, { backgroundColor: phase == 0 ? 'white' : '#B5B1FF' }]}></View>
+							<View style={[styles.progressBar, { backgroundColor: phase == 1 ? 'white' : '#B5B1FF' }]}></View>
+							<View style={[styles.progressBar, { backgroundColor: phase == 2 ? 'white' : '#B5B1FF' }]}></View>
+						</View>
 						<View style={styles.controls}>
 							{phase === 0 ? (
 								<View />
 							) : (
 								<TouchableOpacity onPress={() => setPhase((phase) => phase - 1)} style={styles.btn}>
-									<Icon name="chevron-back-outline" size={22} color="#6C63FF" style={{marginLeft: -10}}/>
+									<Icon name="chevron-back-outline" size={22} color="#6C63FF" style={{ marginLeft: -10 }} />
 									<Text style={styles.btnText}>BACK</Text>
 								</TouchableOpacity>
 							)}
 							{phase === phases.length - 1 ? (
 								<TouchableOpacity onPress={() => router.replace('/home')} style={styles.btn}>
-                                <Text style={styles.btnText}>FINISH</Text>
-                                <Icon name="chevron-forward-outline" size={22} color="#6C63FF" style={{marginRight: -10}} />
-                            </TouchableOpacity>
+									<Text style={styles.btnText}>FINISH</Text>
+									<Icon name="chevron-forward-outline" size={22} color="#6C63FF" style={{ marginRight: -10 }} />
+								</TouchableOpacity>
 							) : (
 								<TouchableOpacity onPress={() => setPhase((phase) => phase + 1)} style={styles.btn}>
 									<Text style={styles.btnText}>NEXT</Text>
-									<Icon name="chevron-forward-outline" size={22} color="#6C63FF" style={{marginRight: -10}} />
+									<Icon name="chevron-forward-outline" size={22} color="#6C63FF" style={{ marginRight: -10 }} />
 								</TouchableOpacity>
 							)}
 						</View>
@@ -53,6 +55,12 @@ const Modal: React.FC<ModalProps> = ({ open, phases, onClose }) => {
 export default Modal;
 
 const styles = StyleSheet.create({
+	progressBar: {
+		height: 5,
+		width: 25,
+        borderRadius: 10,
+		backgroundColor: '#B5B1FF',
+	},
 	backdrop: {
 		backgroundColor: 'rgba(0, 0, 0, 0.7)',
 		backdropFilter: 'blur',
@@ -73,7 +81,7 @@ const styles = StyleSheet.create({
 		position: 'absolute',
 		width: '100%',
 		bottom: '0%',
-        paddingHorizontal: 20,
+		paddingHorizontal: 20,
 		left: 0,
 		transform: 'translateY(-50%)',
 	},
@@ -98,6 +106,6 @@ const styles = StyleSheet.create({
 	btnText: {
 		color: '#6C63FF',
 		fontFamily: 'SourceSemibold',
-		fontSize: 22
+		fontSize: 22,
 	},
 });

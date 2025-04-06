@@ -32,13 +32,16 @@ export default TopBar;
 const styles = StyleSheet.create({
 	container: {
 		flexDirection: 'row',
-		alignItems: 'center',
+		alignItems: 'flex-end',
 		justifyContent: 'space-between',
 		paddingHorizontal: 20,
-		paddingVertical: 10,
+		paddingVertical: 20,
+        height: 150,
+        marginTop: -80,
+        backgroundColor: '#6C63FF'
 	},
 	btn: {
-		backgroundColor: '#FF4545',
+		backgroundColor: '#FF5A5A',
 		paddingHorizontal: 20,
 		paddingVertical: 12,
 		borderRadius: 15,
@@ -57,8 +60,8 @@ const styles = StyleSheet.create({
 	},
 	logoText: {
 		fontFamily: 'SourceBold',
-		fontSize: 26,
-		color: '#6C63FF',
+		fontSize: 28,
+		color: 'white',
 		letterSpacing: 0.2,
 	},
 });

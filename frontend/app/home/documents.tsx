@@ -4,12 +4,18 @@ import TopBar from '@/components/TopBar';
 import api from '@/lib/axiosConfig';
 import { global } from '@/lib/context';
 import { Redirect, useRouter } from 'expo-router';
-import { speak } from 'expo-speech';
+import { pause, speak, resume, stop } from 'expo-speech';
 import { useContext, useState } from 'react';
 import { SafeAreaView, StyleSheet, Text, TouchableOpacity, View, ImageBackground } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import SelectDropdown from 'react-native-select-dropdown';
 import Icon from 'react-native-vector-icons/Ionicons';
+import { SelectList } from 'react-native-dropdown-select-list';
+
+const data = [
+	{ key: '1', value: 'English' },
+	{ key: '2', value: 'Spanish' },
+];
 
 export default function Documents() {
 	const router = useRouter();
@@ -17,13 +23,15 @@ export default function Documents() {
 	const [selected, setSelected] = useState<number | null>(null);
 	const [language, setLanguage] = useState<'English' | 'Spanish'>('English');
 
+	const [playing, setPlaying] = useState(false);
+
 	if (!user) return <Redirect href="/" />;
 
 	return (
 		<ImageBackground source={require('../../assets/images/bg.png')} imageStyle={{ resizeMode: 'cover' }} style={{ height: '100%', width: '100%' }}>
 			<SafeAreaView style={styles.container}>
 				<TopBar />
-				<KeyboardAwareScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ padding: 20 }}>
+				<KeyboardAwareScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ padding: 20, paddingBottom: 60 }}>
 					<Title>Medical Records</Title>
 					<View style={styles.list}>
 						{user.procedures.map((proc, i) => (
@@ -38,7 +46,6 @@ export default function Documents() {
 								onClosed={() => setSelected(null)}
 								key={i}
 							>
-                                
 								<Text style={styles.details}>{proc.explanation.explanation}</Text>
 								<View style={styles.tts}>
 									<SelectDropdown
@@ -59,17 +66,27 @@ export default function Documents() {
 											</View>
 										)}
 									/>
+
 									<TouchableOpacity
 										style={styles.btn}
-										onPress={() =>
-											language === 'English'
-												? speak(proc.explanation.explanation, { language: 'en' })
-												: api
-														.get(`/translate?language=Spanish&text=${proc.explanation.explanation}`)
-														.then((res) => speak(res.data, { language: 'es-419' }))
-										}
+										onPress={() => {
+											if (playing) {
+												pause();
+												setPlaying(false);
+											} else {
+                                                setPlaying(true);
+                                                stop()
+												language === 'English'
+													? speak(proc.explanation.explanation, { language: 'en' })
+													: api
+															.get(`/translate?language=Spanish&text=${proc.explanation.explanation}`)
+															.then((res) => speak(res.data, { language: 'es-419' }));
+											}
+										}}
 									>
-										<Text style={{ color: 'white', fontSize: 18 }}>Listen</Text>
+										{/* <Text style={{ color: 'white', fontSize: 18 }}>Listen</Text> */}
+										{!playing && <Icon name="play" size={24} color="white" />}
+										{playing && <Icon name="pause" size={24} color="white" />}
 									</TouchableOpacity>
 								</View>
 							</AccordionItem>
@@ -114,7 +131,7 @@ const styles = StyleSheet.create({
 		paddingBottom: 12,
 		paddingLeft: 24,
 		paddingRight: 24,
-		borderRadius: 20,
+		borderRadius: 10,
 	},
 	dropdown: {
 		display: 'flex',
@@ -124,7 +141,7 @@ const styles = StyleSheet.create({
 		backgroundColor: '#E2E0FF',
 		flexBasis: 1,
 		flexGrow: 1,
-		borderRadius: 16,
+		borderRadius: 10,
 		paddingTop: 12,
 		paddingBottom: 12,
 		paddingLeft: 24,

@@ -52,7 +52,7 @@ export default function Home() {
 
 	return (
 		<ImageBackground source={require('../../assets/images/bg.png')} imageStyle={{ resizeMode: 'cover' }} style={{ height: '100%', width: '100%' }}>
-            	{/* <Modal open onClose={() => {}} phases={[<Text>hi</Text>, <Text>hi</Text>, <Text>hi</Text>]} /> */}
+			{/* <Modal open onClose={() => {}} phases={[<Text>hi</Text>, <Text>hi</Text>, <Text>hi</Text>]} /> */}
 			<SafeAreaView style={styles.container}>
 				<TopBar />
 				<KeyboardAwareScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ padding: 20, paddingBottom: 80 }}>
@@ -68,11 +68,8 @@ export default function Home() {
 					</ScrollView>
 					{user?.prescriptions[0] && user?.prescriptions[0].length > 0 && (
 						<View style={{ gap: 10 }}>
-							<View style={styles.titleContainer}>
-								<Checkmark color="white" />
-								<Text style={styles.sectionTitle}>Ready to Take</Text>
-							</View>
-
+							<Text style={{ color: '#6C63FF', fontFamily: 'SourceBold', fontSize: 28, marginTop: 15 }}>Ready to Take</Text>
+							<View style={{ height: 1.5, borderRadius: 10, width: '100%', backgroundColor: '#6C63FF', marginBottom: 10 }}></View>
 							<View style={{ gap: 20, marginBottom: 20 }}>
 								{user?.prescriptions[0].map((prescription, i) => (
 									<MedicineCard key={i} prescription={prescription} />
@@ -82,10 +79,8 @@ export default function Home() {
 					)}
 					{user?.prescriptions[1] && user?.prescriptions[1].length > 0 && (
 						<View style={{ gap: 10 }}>
-							<View style={styles.titleContainer}>
-								<Clock color="white" />
-								<Text style={styles.sectionTitle}>In Progress</Text>
-							</View>
+							<Text style={{ color: '#6C63FF', fontFamily: 'SourceBold', fontSize: 28, marginTop: 15 }}>In Progress</Text>
+							<View style={{ height: 1.5, borderRadius: 10, width: '100%', backgroundColor: '#6C63FF', marginBottom: 10 }}></View>
 
 							<View style={{ gap: 20, marginBottom: 20 }}>
 								{user?.prescriptions[1].map((prescription, i) => (
@@ -96,10 +91,8 @@ export default function Home() {
 					)}
 					{user?.prescriptions[2] && user?.prescriptions[2].length > 0 && (
 						<View style={{ gap: 10 }}>
-							<View style={styles.titleContainer}>
-								<Icon name="trophy-outline" color="white" size={24} />
-								<Text style={styles.sectionTitle}>Finished</Text>
-							</View>
+							<Text style={{ color: '#6C63FF', fontFamily: 'SourceBold', fontSize: 28, marginTop: 15 }}>Finished</Text>
+							<View style={{ height: 1.5, borderRadius: 10, width: '100%', backgroundColor: '#6C63FF', marginBottom: 10 }}></View>
 
 							<View style={{ gap: 20 }}>
 								{user?.prescriptions[2].map((prescription, i) => (
@@ -108,10 +101,8 @@ export default function Home() {
 							</View>
 						</View>
 					)}
-                    <TouchableOpacity onPress={() => router.push('/onboarding')}><Text>aaaaa</Text></TouchableOpacity>
 				</KeyboardAwareScrollView>
 			</SafeAreaView>
-                    
 		</ImageBackground>
 	);
 }

@@ -16,7 +16,7 @@ const styles = StyleSheet.create({
         gap: 5,
         paddingHorizontal: 20,
         paddingVertical: 12,
-        backgroundColor: '#FFFCDD',
+        backgroundColor: 'white',
         borderRadius: 15,
         shadowOffset: { width: 0, height: 3 },
         shadowRadius: 5,

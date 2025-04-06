@@ -19,6 +19,7 @@ import Moon from 'react-native-vector-icons/Ionicons';
 import React from 'react';
 import Icon from 'react-native-vector-icons/Ionicons';
 import api from '@/lib/axiosConfig';
+import LightBackArrow from '@/components/LightBackArrow';
 
 export default function ExtraScreen() {
 	const [prescription, setPrescription] = useState<Prescription>();
@@ -76,14 +77,14 @@ export default function ExtraScreen() {
 	return (
 		<ImageBackground source={require('../assets/images/bg.png')} imageStyle={{ resizeMode: 'cover' }} style={{ height: '100%', width: '100%' }}>
 			<SafeAreaView style={styles.container}>
-				<BackArrow />
+				<LightBackArrow />
 				<TopBar logo={true} />
 				<KeyboardAwareScrollView
 					showsVerticalScrollIndicator={false}
 					contentContainerStyle={{ padding: 20, paddingBottom: 40, justifyContent: 'space-between', height: '100%' }}
 				>
 					<View style={{gap: 10}}>
-						<Title noUnderline={true}>{prescription?.medication}</Title>
+						<Text style={styles.title}>{prescription?.medication}</Text>
 
 						<View style={{ flexDirection: 'row', gap: 8, flexWrap: 'wrap' }}>
 							<Text style={[styles.interval, { alignSelf: 'flex-start', backgroundColor: '#FFE0FD', color: '#E732FF' }]}>
@@ -160,7 +161,7 @@ const styles = StyleSheet.create({
 		flex: 1,
 	},
 	title: {
-		fontSize: 34,
+		fontSize: 40,
 		fontFamily: 'SourceBold',
 	},
 	description: {

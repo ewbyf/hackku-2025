@@ -1,6 +1,6 @@
 import api from '@/lib/axiosConfig';
 import { global, Prescription } from '@/lib/context';
-import Notifications from 'expo-notifications';
+import * as Notifications from 'expo-notifications';
 import { useRouter } from 'expo-router';
 import React, { useContext, useEffect, useState } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
