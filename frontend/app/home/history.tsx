@@ -10,9 +10,9 @@ export default function History() {
 	return (
 		<SafeAreaView style={styles.container}>
 			<TopBar />
+			<CustomMedicationTimeline />
 
 			<KeyboardAwareScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ flex: 1, padding: 20 }}>
-				<CustomMedicationTimeline />
 			</KeyboardAwareScrollView>
 		</SafeAreaView>
 	);
