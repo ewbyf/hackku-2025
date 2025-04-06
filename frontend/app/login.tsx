@@ -1,13 +1,12 @@
 import BackArrow from '@/components/BackArrow';
+import SignIn from '@/components/svgs/SignIn';
 import { login } from '@/lib/auth';
 import api from '@/lib/axiosConfig';
-import { Link, useRouter } from 'expo-router';
-import { useContext, useState } from 'react';
-import { SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { global } from '@/lib/context';
-import SignIn from '@/components/svgs/SignIn';
-import React from 'react';
+import { Link, useRouter } from 'expo-router';
+import React, { useContext, useState } from 'react';
+import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 export default function Login() {
 	const router = useRouter();
@@ -19,7 +18,7 @@ export default function Login() {
 	const handleLogin = async () => {
 		api.post('/login', {
 			email,
-			password,
+			password
 		})
 			.then((res) => {
 				const data = res.data;
@@ -52,8 +51,7 @@ export default function Login() {
 									onChangeText={(e) => {
 										setEmail(e);
 									}}
-									value={email}
-								></TextInput>
+									value={email}></TextInput>
 							</View>
 							<View style={{ gap: 5 }}>
 								<Text style={styles.label}>PASSWORD</Text>
@@ -65,16 +63,15 @@ export default function Login() {
 										setPassword(e);
 									}}
 									value={password}
-									secureTextEntry={true}
-								></TextInput>
+									secureTextEntry={true}></TextInput>
 							</View>
 							<TouchableOpacity style={styles.btn} onPress={handleLogin}>
 								<Text style={styles.btnText}>Sign in</Text>
 							</TouchableOpacity>
 							<Text style={styles.swapLabel}>
-								Don't have an account?{' '}
+								Don't have an account?
 								<Link style={{ color: 'white', textDecorationLine: 'underline', fontFamily: 'SourceBold' }} href="/signup">
-									Sign up
+									<Text>Sign up</Text>
 								</Link>
 							</Text>
 						</View>
@@ -90,18 +87,18 @@ const styles = StyleSheet.create({
 		display: 'flex',
 		flex: 1,
 		backgroundColor: '#6C63FF',
-		paddingBottom: 30,
+		paddingBottom: 30
 	},
 	title: {
 		fontFamily: 'SourceBold',
 		color: 'white',
-		fontSize: 48,
+		fontSize: 48
 	},
 	description: {
 		fontFamily: 'Source',
 		color: 'white',
 		fontSize: 24,
-		textAlign: 'center',
+		textAlign: 'center'
 	},
 	btn: {
 		backgroundColor: 'white',
@@ -111,29 +108,30 @@ const styles = StyleSheet.create({
 		borderRadius: 15,
 		shadowOffset: { width: 0, height: 4 },
 		shadowOpacity: 0.25,
-		marginTop: 10,
+		marginTop: 10
 	},
 	btnText: {
 		color: '#6C63FF',
 		fontFamily: 'SourceSemibold',
-		fontSize: 22,
+		fontSize: 22
 	},
 	input: {
 		borderRadius: 10,
 		fontSize: 17,
 		padding: 15,
 		color: 'white',
-		backgroundColor: '#544FB1',
+		backgroundColor: '#544FB1'
 	},
 	label: {
 		color: 'white',
 		fontFamily: 'SourceBold',
-		fontSize: 15,
+		fontSize: 15
 	},
 	swapLabel: {
 		color: 'white',
 		fontFamily: 'Source',
 		fontSize: 15,
-		textAlign: 'center',
-	},
+		textAlign: 'center'
+	}
 });
+

@@ -34,5 +34,16 @@ export interface User {
 	procedures: PatientProcedure[];
 }
 
-export const global = React.createContext<{ user: User | null; updateUser: () => void }>({ user: null, updateUser: () => {} });
+export const global = React.createContext<{ user: User | null; textSize: number; setTextSize: (sz: number) => void; updateUser: () => void }>({
+	user: null,
+	textSize: 16,
+	setTextSize: () => {},
+	updateUser: () => {}
+});
+
+export type Tab = 'index' | 'history' | 'documents';
+
+export const tutorial = React.createContext<{ target: (tab: Tab) => void }>({
+	target: () => {}
+});
 

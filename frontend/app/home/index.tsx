@@ -1,16 +1,15 @@
 import MedicineCard from '@/components/MedicineCard';
+import Checkmark from '@/components/svgs/Checkmark';
+import Clock from '@/components/svgs/Clock';
 import Title from '@/components/Title';
 import TopBar from '@/components/TopBar';
 import { global } from '@/lib/context';
 import { useRouter } from 'expo-router';
 import { DateTime } from 'luxon';
 import React, { useContext, useEffect, useState } from 'react';
-import { ImageBackground, SafeAreaView, StyleSheet, View, Text } from 'react-native';
-import ReactNativeCalendarEvents from 'react-native-calendar-events';
-import calendar from 'react-native-calendar-events';
+import { ImageBackground, SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { default as calendar, default as ReactNativeCalendarEvents } from 'react-native-calendar-events';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import Checkmark from '@/components/svgs/Checkmark';
-import Clock from '@/components/svgs/Clock';
 
 export default function Home() {
 	const router = useRouter();
@@ -68,7 +67,7 @@ export default function Home() {
 					{user?.prescriptions[1] && user?.prescriptions[1].length > 0 && (
 						<View style={{ gap: 10 }}>
 							<View style={styles.titleContainer}>
-								<Clock color="white"/>
+								<Clock color="white" />
 								<Text style={styles.sectionTitle}>In Progress</Text>
 							</View>
 
@@ -89,6 +88,9 @@ export default function Home() {
 							</View>
 						</View>
 					)}
+					<TouchableOpacity style={{ padding: 8, borderRadius: 6, backgroundColor: '#6C63FF' }} onPress={() => router.navigate('/tutorial')}>
+						<Text>Tutorial</Text>
+					</TouchableOpacity>
 				</KeyboardAwareScrollView>
 			</SafeAreaView>
 		</ImageBackground>
@@ -98,17 +100,17 @@ export default function Home() {
 const styles = StyleSheet.create({
 	container: {
 		display: 'flex',
-		flex: 1,
+		flex: 1
 	},
 	blurContainer: {
 		padding: 20,
 		borderRadius: 10,
-		overflow: 'hidden',
+		overflow: 'hidden'
 	},
 	sectionTitle: {
 		color: 'white',
 		fontFamily: 'SourceSemibold',
-		fontSize: 20,
+		fontSize: 20
 	},
 	titleContainer: {
 		backgroundColor: '#544FB1',
@@ -119,6 +121,7 @@ const styles = StyleSheet.create({
 		alignSelf: 'flex-start',
 		flexDirection: 'row',
 		alignItems: 'center',
-		gap: 8,
-	},
+		gap: 8
+	}
 });
+
