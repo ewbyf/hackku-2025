@@ -6,6 +6,7 @@ import { useRouter } from 'expo-router';
 import { DateTime } from 'luxon';
 import React, { useContext, useEffect, useState } from 'react';
 import { ImageBackground, SafeAreaView, StyleSheet, View, Text } from 'react-native';
+import ReactNativeCalendarEvents from 'react-native-calendar-events';
 import calendar from 'react-native-calendar-events';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
@@ -17,6 +18,16 @@ export default function Home() {
 
 	useEffect(() => {
 		(async () => {
+			const permissionStatus = await ReactNativeCalendarEvents.checkPermissions();
+
+			if (permissionStatus !== 'authorized') {
+				const newStatus = await ReactNativeCalendarEvents.requestPermissions();
+				if (newStatus !== 'authorized') {
+					console.warn('Calendar permission not granted');
+					return;
+				}
+			}
+
 			const events = await calendar.fetchAllEvents(DateTime.now().toISODate(), DateTime.now().plus({ days: 30 }).toISODate());
 
 			setHasEvent(
@@ -39,30 +50,36 @@ export default function Home() {
 				<Text>{hasEvent}</Text>
 				<KeyboardAwareScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ padding: 20, paddingBottom: 80 }}>
 					<Title>Today's Meds</Title>
-					<View style={{ gap: 10 }}>
-						<Text style={styles.sectionTitle}>🚫  Not Started</Text>
-						<View style={{ gap: 20, marginBottom: 20 }}>
-							{user?.prescriptions[0].map((prescription, i) => (
-								<MedicineCard key={i} prescription={prescription} />
-							))}
+					{user?.prescriptions[0] && user?.prescriptions[0].length > 0 && (
+						<View style={{ gap: 10 }}>
+							<Text style={styles.sectionTitle}>🚫 Not Started</Text>
+							<View style={{ gap: 20, marginBottom: 20 }}>
+								{user?.prescriptions[0].map((prescription, i) => (
+									<MedicineCard key={i} prescription={prescription} />
+								))}
+							</View>
 						</View>
-					</View>
-					<View style={{ gap: 10 }}>
-						<Text style={styles.sectionTitle}>⏳  In Progress</Text>
-						<View style={{ gap: 20, marginBottom: 20 }}>
-							{user?.prescriptions[1].map((prescription, i) => (
-								<MedicineCard key={i} prescription={prescription} />
-							))}
+					)}
+					{user?.prescriptions[1] && user?.prescriptions[1].length > 0 && (
+						<View style={{ gap: 10 }}>
+							<Text style={styles.sectionTitle}>⏳ In Progress</Text>
+							<View style={{ gap: 20, marginBottom: 20 }}>
+								{user?.prescriptions[1].map((prescription, i) => (
+									<MedicineCard key={i} prescription={prescription} />
+								))}
+							</View>
 						</View>
-					</View>
-					<View style={{ gap: 10 }}>
-						<Text style={styles.sectionTitle}>✅  Finished</Text>
-						<View style={{ gap: 20 }}>
-							{user?.prescriptions[2].map((prescription, i) => (
-								<MedicineCard key={i} prescription={prescription} />
-							))}
+					)}
+					{user?.prescriptions[2] && user?.prescriptions[2].length > 0 && (
+						<View style={{ gap: 10 }}>
+							<Text style={styles.sectionTitle}>✅ Finished</Text>
+							<View style={{ gap: 20 }}>
+								{user?.prescriptions[2].map((prescription, i) => (
+									<MedicineCard key={i} prescription={prescription} />
+								))}
+							</View>
 						</View>
-					</View>
+					)}
 				</KeyboardAwareScrollView>
 			</SafeAreaView>
 		</ImageBackground>
@@ -83,9 +100,9 @@ const styles = StyleSheet.create({
 		color: 'white',
 		fontFamily: 'SourceSemibold',
 		fontSize: 32,
-        backgroundColor: '#6C63FF',
-        padding: 10,
-        paddingHorizontal: 20,
-        borderRadius: 15,
+		backgroundColor: '#6C63FF',
+		padding: 10,
+		paddingHorizontal: 20,
+		borderRadius: 15,
 	},
 });
