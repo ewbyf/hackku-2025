@@ -11,9 +11,9 @@ interface Props {
 
 const AccordionItem: React.FC<React.PropsWithChildren<Props>> = ({ short, opened, onOpened, onClosed, children }) => {
 	return (
-		<View style={styles.container}>
+		<View style={[styles.container, ]}>
 			<TouchableOpacity onPress={opened ? onClosed : onOpened}>
-				<View style={styles.box}>
+				<View style={[styles.box, {borderRadius: !opened ? 10 : 0}]}>
 					<View>{short}</View>
 					<Icon name={opened ? 'chevron-up' : 'chevron-down'} color="white" size={30} />
 				</View>
@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
 		flexDirection: 'column',
 		gap: 0,
 		color: 'white',
-		overflow: 'hidden',
+        borderRadius: 10,
 		borderBottomLeftRadius: 10,
 		borderBottomRightRadius: 10,
 		shadowOffset: { width: 0, height: 4 },
@@ -42,6 +42,7 @@ const styles = StyleSheet.create({
 		display: 'flex',
 		alignContent: 'center',
 		flexDirection: 'row',
+        alignItems: 'center',
 		justifyContent: 'space-between',
 		paddingLeft: 20,
 		paddingRight: 20,
@@ -49,16 +50,14 @@ const styles = StyleSheet.create({
 		paddingBottom: 15,
 		backgroundColor: '#6C63FF',
 		borderTopLeftRadius: 10,
-		borderTopRightRadius: 10
+		borderTopRightRadius: 10,
 	},
 	icon: {
 		height: 30
 	},
 	details: {
-		paddingLeft: 20,
-		paddingRight: 20,
-		paddingTop: 10,
-		paddingBottom: 10
+		paddingHorizontal: 20,
+		paddingVertical: 10,
 	}
 });
 

@@ -13,6 +13,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { Dimensions, ImageBackground, SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { default as calendar, default as ReactNativeCalendarEvents } from 'react-native-calendar-events';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 const width = Dimensions.get('window').width;
 
@@ -94,7 +95,7 @@ export default function Home() {
 					{user?.prescriptions[2] && user?.prescriptions[2].length > 0 && (
 						<View style={{ gap: 10 }}>
 							<View style={styles.titleContainer}>
-								<Clock color="white" />
+								<Icon name="trophy-outline" color="white" size={24} />
 								<Text style={styles.sectionTitle}>Finished</Text>
 							</View>
 
