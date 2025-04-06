@@ -7,10 +7,13 @@ import { Prescription } from '@/lib/context';
 import React, { useContext, useEffect, useState } from 'react';
 import api from '@/lib/axiosConfig';
 import { global } from '@/lib/context';
+import { useRouter } from 'expo-router';
 
 const MedicineCard = ({ prescription }: { prescription: Prescription }) => {
 	const { updateUser } = useContext(global);
 	const [time, setTime] = useState(0);
+
+    const router = useRouter();
 
 	useEffect(() => {
 		if (prescription.lastTaken == null) return;
@@ -52,48 +55,56 @@ const MedicineCard = ({ prescription }: { prescription: Prescription }) => {
 	return (
 		<TouchableOpacity
 			style={[styles.container, { opacity: prescription.freq - prescription.takenToday == 0 ? 0.5 : 1 }]}
-			disabled={prescription.freq - prescription.takenToday == 0}
+			onPress={() => router.push({
+                pathname: '/drug',
+                params: {
+                  id: prescription.id,
+                },
+              })} 
 		>
-			<View style={{ justifyContent: 'space-between', gap: 0 }}>
+			<View style={{ justifyContent: 'space-between', gap: 5 }}>
 				<View>
 					<Text style={styles.name} numberOfLines={2}>
 						{prescription.medication}
 					</Text>
 					{/* <Text style={styles.description}>{prescription.de}</Text> */}
 				</View>
-				<View style={{ gap: 3 }}>
+				{/* <View style={{ gap: 3 }}>
 					<Text style={styles.take}>TAKE DURING</Text>
 					<View style={{ flexDirection: 'row', gap: 8 }}>
 						<Sun
 							name="sunny"
 							color={'white'}
 							size={28}
-							style={prescription.medication === 'morning' ? styles.sunActive : styles.emojiInactive}
+							style={prescription.timing?.toLowerCase() === 'morning' ? styles.sunActive : styles.emojiInactive}
 						></Sun>
 						<Fork
 							name="restaurant"
 							color={'yellow'}
 							size={28}
-							style={prescription.medication === 'meal' ? styles.mealActive : styles.emojiInactive}
+							style={prescription.timing?.toLowerCase() === 'meal' ? styles.mealActive : styles.emojiInactive}
 						></Fork>
 						<Moon
 							name="moon"
 							color={'white'}
 							size={28}
-							style={prescription.medication === 'night' ? styles.moonActive : styles.emojiInactive}
+							style={prescription.timing?.toLowerCase() === 'before bed' ? styles.moonActive : styles.emojiInactive}
 						></Moon>
 					</View>
-				</View>
-				<Text style={[styles.interval, { alignSelf: 'flex-start' }]}>{prescription.freq - prescription.takenToday} dose(s) left</Text>
-			</View>
-			<View style={{ justifyContent: 'space-between', gap: 10 }}>
-				<Text style={styles.interval}>
+				</View> */}
+                	<Text style={[styles.interval, {alignSelf: 'flex-start', backgroundColor: '#FFE0FD', color: '#E732FF'}]}>
 					Every {prescription.period} {prescription.periodUnit === 'h' ? 'hour(s)' : 'day(s)'}
 				</Text>
+				<Text style={[styles.interval, { alignSelf: 'flex-start' }]}>{prescription.freq - prescription.takenToday}/{prescription.freq} dose(s) left to take</Text>
+			</View>
+			<View style={{ justifyContent: 'space-between', gap: 10 }}>
+				{/* <Text style={styles.interval}>
+					Every {prescription.period} {prescription.periodUnit === 'h' ? 'hour(s)' : 'day(s)'}
+				</Text> */}
 				{prescription.freq - prescription.takenToday == 0 ? (
 					<>
 						<TouchableOpacity style={styles.btn} onPress={takeMed} disabled={prescription.freq - prescription.takenToday == 0}>
-							{prescription.freq - prescription.takenToday == 0 && <Text style={styles.btnText}>Done ✅</Text>}
+							{prescription.freq - prescription.takenToday == 0 && <Text style={styles.btnText}>Done</Text>}
 						</TouchableOpacity>
 						<View style={[styles.statusContainer, { backgroundColor: '#FFF8C9' }]}>
 							<Text style={[styles.status, { color: '#F9AE00' }]}>DONE FOR TODAY</Text>
@@ -105,7 +116,7 @@ const MedicineCard = ({ prescription }: { prescription: Prescription }) => {
 						prescription.period * ((prescription.periodUnit == 'h' ? 3600 : (3600 * 24) / prescription.freq) * 1000) ? (
 					<>
 						<TouchableOpacity style={styles.btn} onPress={takeMed} disabled={prescription.freq - prescription.takenToday == 0}>
-							<Text style={styles.btnText}>I Took It 💊</Text>
+							<Text style={styles.btnText}>I took it</Text>
 						</TouchableOpacity>
 						<View style={styles.statusContainer}>
 							<Text style={styles.status}>READY</Text>
@@ -147,7 +158,6 @@ const styles = StyleSheet.create({
         shadowRadius: 5,
 		shadowOpacity: 0.25,
         shadowColor: '#6C63FF',
-		height: 150,
 	},
 	name: {
 		fontFamily: 'SourceSemibold',

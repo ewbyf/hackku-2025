@@ -1,15 +1,20 @@
 import { View, Text, Button, StyleSheet, TouchableOpacity } from 'react-native';
 import Logo from 'react-native-vector-icons/Ionicons';
 import LogoSVG from './svgs/Logo';
+import { logout } from '@/lib/auth';
 
 const TopBar = () => {
+    const leave = async() => {
+        await logout();
+    }
+
 	return (
 		<View style={styles.container}>
 			<View style={{ flexDirection: 'row', gap: 5, alignItems: 'center' }}>
 				<LogoSVG/>
 				<Text style={styles.logoText}>ClearHelp</Text>
 			</View>
-			<TouchableOpacity style={styles.btn}>
+			<TouchableOpacity style={styles.btn} onPress={leave}>
 				<Logo name="call" color="white" size={18} />
 				<Text style={styles.btnText}>EMERGENCY</Text>
 			</TouchableOpacity>
@@ -29,8 +34,8 @@ const styles = StyleSheet.create({
 	},
     btn: {
         backgroundColor: '#FF4545',
-        paddingHorizontal: 25,
-        paddingVertical: 15,
+        paddingHorizontal: 20,
+        paddingVertical: 12,
         borderRadius: 15,
         flexDirection: 'row',
         alignItems: 'center',
@@ -41,7 +46,7 @@ const styles = StyleSheet.create({
     },
     btnText: {
         fontFamily: "SourceBold",
-        fontSize: 18,
+        fontSize: 17,
         color: 'white'
     },
 	logoText: {

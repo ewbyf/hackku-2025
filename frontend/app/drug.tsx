@@ -1,24 +1,48 @@
-import { Stack, useRouter } from 'expo-router';
-import { View, Text, Button, SafeAreaView, StyleSheet } from 'react-native';
-import React from 'react';
+import { Stack, useLocalSearchParams, } from 'expo-router';
+import { global, Prescription } from '@/lib/context';
+import MedicineCard from '@/components/MedicineCard';
+import Title from '@/components/Title';
+import TopBar from '@/components/TopBar';
+import { useRouter } from 'expo-router';
+import { DateTime } from 'luxon';
+import { ImageBackground, SafeAreaView, StyleSheet, View, Text } from 'react-native';
+import ReactNativeCalendarEvents from 'react-native-calendar-events';
+import calendar from 'react-native-calendar-events';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import Checkmark from '@/components/svgs/Checkmark';
+import Clock from '@/components/svgs/Clock';
+import { useState, useEffect, useContext } from 'react';
 
 export default function ExtraScreen() {
-  const router = useRouter();
+	const [prescription, setPrescription] = useState<Prescription>();
 
-  return (
-    <SafeAreaView>
-      <Stack.Screen options={{ headerShown: true, title: 'Details', presentation: 'modal' }} />
-      <View>
-        <Text>This page has no tab bar</Text>
-        <Button title="Go Back" onPress={() => router.back()} />
-      </View>
-    </SafeAreaView>
-  );
+	const router = useRouter();
+
+	const { id } = useLocalSearchParams();
+	const { user } = useContext(global);
+
+	useEffect(() => {
+		const arr = [...user!.prescriptions[0], ...user!.prescriptions[1], ...user!.prescriptions[2]];
+		setPrescription(arr.find((pre) => pre.id == id));
+	}, []);
+
+	return (
+		<ImageBackground source={require('../assets/images/bg.png')} imageStyle={{ resizeMode: 'cover' }} style={{ height: '100%', width: '100%' }}>
+			<SafeAreaView style={styles.container}>
+                
+				<TopBar />
+				<KeyboardAwareScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ padding: 20, paddingBottom: 80 }}>
+					<Title>Today's Meds</Title>
+				
+				</KeyboardAwareScrollView>
+			</SafeAreaView>
+		</ImageBackground>
+	);
 }
 
 const styles = StyleSheet.create({
-    container: {
-        display: 'flex',
-        flex: 1,
-    },
+	container: {
+		display: 'flex',
+		flex: 1,
+	},
 });

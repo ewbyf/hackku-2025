@@ -39,7 +39,6 @@ export default function Login() {
 
 			<View style={styles.container}>
 				<KeyboardAwareScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ flex: 1, padding: 30 }}>
-					{' '}
 					<SignIn style={{ position: 'absolute', zIndex: 10 }} height={375} />
 					<View style={{ gap: 20, justifyContent: 'flex-end', height: '100%' }}>
 						<Text style={styles.title}>Let's get you signed in</Text>
@@ -48,7 +47,7 @@ export default function Login() {
 								<Text style={styles.label}>EMAIL ADDRESS</Text>
 								<TextInput
 									style={[styles.input]}
-									placeholder="Enter your email address..."
+									placeholder="Enter your email address"
 									placeholderTextColor={'white'}
 									onChangeText={(e) => {
 										setEmail(e);
@@ -60,7 +59,7 @@ export default function Login() {
 								<Text style={styles.label}>PASSWORD</Text>
 								<TextInput
 									style={[styles.input]}
-									placeholder="Enter your password..."
+									placeholder="Enter your password"
 									placeholderTextColor={'white'}
 									onChangeText={(e) => {
 										setPassword(e);
@@ -121,15 +120,15 @@ const styles = StyleSheet.create({
 	},
 	input: {
 		borderRadius: 10,
-		fontSize: 16,
+		fontSize: 17,
 		padding: 15,
 		color: 'white',
-		backgroundColor: '#918AFF',
+		backgroundColor: '#544FB1',
 	},
 	label: {
 		color: 'white',
 		fontFamily: 'SourceBold',
-		fontSize: 14,
+		fontSize: 15,
 	},
 	swapLabel: {
 		color: 'white',

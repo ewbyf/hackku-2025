@@ -64,7 +64,7 @@ export default function SignUp() {
 								<Text style={styles.label}>EMAIL ADDRESS</Text>
 								<TextInput
 									style={[styles.input]}
-									placeholder="Enter your email address..."
+									placeholder="Enter your email address"
 									placeholderTextColor={'white'}
 									onChangeText={(e) => {
 										setEmail(e);
@@ -76,7 +76,7 @@ export default function SignUp() {
 								<Text style={styles.label}>PASSWORD</Text>
 								<TextInput
 									style={[styles.input]}
-									placeholder="Enter your password..."
+									placeholder="Enter your password"
 									placeholderTextColor={'white'}
 									onChangeText={(e) => {
 										setPassword(e);
@@ -89,7 +89,7 @@ export default function SignUp() {
 								<Text style={styles.label}>CONFIRM PASSWORD</Text>
 								<TextInput
 									style={[styles.input]}
-									placeholder="Confirm your password..."
+									placeholder="Confirm your password"
 									placeholderTextColor={'white'}
 									onChangeText={(e) => {
 										setConfirmPassword(e);
@@ -151,15 +151,15 @@ const styles = StyleSheet.create({
 	},
 	input: {
 		borderRadius: 10,
-		fontSize: 16,
+		fontSize: 17,
 		padding: 15,
 		color: 'white',
-		backgroundColor: '#918AFF',
+		backgroundColor: '#544FB1',
 	},
 	label: {
 		color: 'white',
 		fontFamily: 'SourceBold',
-		fontSize: 14,
+		fontSize: 15,
 	},
 	swapLabel: {
 		color: 'white',

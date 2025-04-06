@@ -9,6 +9,8 @@ import { ImageBackground, SafeAreaView, StyleSheet, View, Text } from 'react-nat
 import ReactNativeCalendarEvents from 'react-native-calendar-events';
 import calendar from 'react-native-calendar-events';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import Checkmark from '@/components/svgs/Checkmark';
+import Clock from '@/components/svgs/Clock';
 
 export default function Home() {
 	const router = useRouter();
@@ -47,12 +49,15 @@ export default function Home() {
 		<ImageBackground source={require('../../assets/images/bg.png')} imageStyle={{ resizeMode: 'cover' }} style={{ height: '100%', width: '100%' }}>
 			<SafeAreaView style={styles.container}>
 				<TopBar />
-				<Text>{hasEvent}</Text>
 				<KeyboardAwareScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ padding: 20, paddingBottom: 80 }}>
 					<Title>Today's Meds</Title>
 					{user?.prescriptions[0] && user?.prescriptions[0].length > 0 && (
 						<View style={{ gap: 10 }}>
-							<Text style={styles.sectionTitle}>🚫 Not Started</Text>
+							<View style={styles.titleContainer}>
+								<Checkmark color="white" />
+								<Text style={styles.sectionTitle}>Ready to Take</Text>
+							</View>
+
 							<View style={{ gap: 20, marginBottom: 20 }}>
 								{user?.prescriptions[0].map((prescription, i) => (
 									<MedicineCard key={i} prescription={prescription} />
@@ -62,7 +67,11 @@ export default function Home() {
 					)}
 					{user?.prescriptions[1] && user?.prescriptions[1].length > 0 && (
 						<View style={{ gap: 10 }}>
-							<Text style={styles.sectionTitle}>⏳ In Progress</Text>
+							<View style={styles.titleContainer}>
+								<Clock color="white"/>
+								<Text style={styles.sectionTitle}>In Progress</Text>
+							</View>
+
 							<View style={{ gap: 20, marginBottom: 20 }}>
 								{user?.prescriptions[1].map((prescription, i) => (
 									<MedicineCard key={i} prescription={prescription} />
@@ -72,7 +81,7 @@ export default function Home() {
 					)}
 					{user?.prescriptions[2] && user?.prescriptions[2].length > 0 && (
 						<View style={{ gap: 10 }}>
-							<Text style={styles.sectionTitle}>✅ Finished</Text>
+							<Text style={styles.sectionTitle}>🏁 Finished</Text>
 							<View style={{ gap: 20 }}>
 								{user?.prescriptions[2].map((prescription, i) => (
 									<MedicineCard key={i} prescription={prescription} />
@@ -99,10 +108,17 @@ const styles = StyleSheet.create({
 	sectionTitle: {
 		color: 'white',
 		fontFamily: 'SourceSemibold',
-		fontSize: 32,
-		backgroundColor: '#6C63FF',
-		padding: 10,
-		paddingHorizontal: 20,
-		borderRadius: 15,
+		fontSize: 20,
+	},
+	titleContainer: {
+		backgroundColor: '#544FB1',
+		padding: 6,
+		paddingHorizontal: 14,
+		borderRadius: 5,
+		marginTop: 15,
+		alignSelf: 'flex-start',
+		flexDirection: 'row',
+		alignItems: 'center',
+		gap: 8,
 	},
 });
