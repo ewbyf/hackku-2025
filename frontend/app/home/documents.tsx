@@ -1,6 +1,7 @@
 import AccordionItem from '@/components/AccordionItem';
 import Title from '@/components/Title';
 import TopBar from '@/components/TopBar';
+import api from '@/lib/axiosConfig';
 import { global } from '@/lib/context';
 import { Redirect, useRouter } from 'expo-router';
 import { speak } from 'expo-speech';
@@ -57,7 +58,13 @@ export default function Documents() {
 								/>
 								<TouchableOpacity
 									style={styles.btn}
-									onPress={() => speak(proc.explanation.explanation, { language: language === 'English' ? 'en' : 'es-419' })}>
+									onPress={() =>
+										language === 'English'
+											? speak(proc.explanation.explanation, { language: 'en' })
+											: api
+													.get(`/translate?language=Spanish&text=${proc.explanation.explanation}`)
+													.then((res) => speak(res.data, { language: 'es-419' }))
+									}>
 									<Text style={{ color: 'white', fontSize: 18 }}>Listen</Text>
 								</TouchableOpacity>
 							</View>
