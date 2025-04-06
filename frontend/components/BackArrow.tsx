@@ -17,6 +17,7 @@ const BackArrow = () => {
 	return (
 		<TouchableOpacity style={styles.container} onPress={goBack}>
 			<Icon name="chevron-back-outline" color={'white'} size={36}></Icon>
+            <Text style={styles.title}>Go back</Text>
 		</TouchableOpacity>
 	);
 };
@@ -33,6 +34,14 @@ const styles = StyleSheet.create({
 		shadowOpacity: 0.25,
         padding: 8,
         borderRadius: 10,
-        zIndex: 99
+        zIndex: 99,
+        flexDirection: 'row',
+        alignItems: 'center'
 	},
+    title: {
+        fontSize: 22,
+        color: 'white',
+        fontFamily: 'SourceBold',
+        marginRight: 10,
+    }
 });

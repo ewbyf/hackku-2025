@@ -19,7 +19,7 @@ const Phase1: React.FC<TutorialPhaseProps> = ({ next }) => {
 							<Text style={styles.sectionTitle}>Ready to Take</Text>
 						</View>
 						<View style={{ gap: 20, marginBottom: 20 }}>
-							<TouchableWithoutFeedback style={{ zIndex: 2 }}>
+							<TouchableWithoutFeedback style={{ zIndex: 2, position: 'relative' }}>
 								<MedicineCard
 									inspect={next}
 									prescription={{
@@ -39,18 +39,18 @@ const Phase1: React.FC<TutorialPhaseProps> = ({ next }) => {
 						</View>
 					</View>
 				</KeyboardAwareScrollView>
-				<View
-					style={{
-						width: window.innerWidth,
-						height: window.innerHeight,
-						position: 'absolute',
-						top: 0,
-						left: 0,
-						zIndex: 1,
-						backgroundColor: 'rgba(0, 0, 0, 0.6)'
-					}}
-				/>
 			</SafeAreaView>
+			<View
+				style={{
+					width: '100%',
+					height: '100%',
+					position: 'absolute',
+					top: 0,
+					left: 0,
+					zIndex: 1,
+					backgroundColor: 'rgba(0, 0, 0, 0.6)'
+				}}
+			/>
 		</ImageBackground>
 	);
 };
