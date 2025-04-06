@@ -1,4 +1,5 @@
 import MedicineCard from '@/components/MedicineCard';
+import PriorityCard from '@/components/PriorityCard';
 import Checkmark from '@/components/svgs/Checkmark';
 import Clock from '@/components/svgs/Clock';
 import Title from '@/components/Title';
@@ -50,6 +51,7 @@ export default function Home() {
 				<TopBar />
 				<KeyboardAwareScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ padding: 20, paddingBottom: 80 }}>
 					<Title>Today's Meds</Title>
+                    <PriorityCard/>
 					{user?.prescriptions[0] && user?.prescriptions[0].length > 0 && (
 						<View style={{ gap: 10 }}>
 							<View style={styles.titleContainer}>
@@ -80,7 +82,11 @@ export default function Home() {
 					)}
 					{user?.prescriptions[2] && user?.prescriptions[2].length > 0 && (
 						<View style={{ gap: 10 }}>
-							<Text style={styles.sectionTitle}>🏁 Finished</Text>
+                            <View style={styles.titleContainer}>
+								<Clock color="white" />
+								<Text style={styles.sectionTitle}>Finished</Text>
+							</View>
+							
 							<View style={{ gap: 20 }}>
 								{user?.prescriptions[2].map((prescription, i) => (
 									<MedicineCard key={i} prescription={prescription} />
