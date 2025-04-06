@@ -3,17 +3,17 @@ import Logo from 'react-native-vector-icons/Ionicons';
 import LogoSVG from './svgs/Logo';
 import { logout } from '@/lib/auth';
 
-const TopBar = () => {
+const TopBar = ({logo} : {logo?: boolean}) => {
     const leave = async() => {
         await logout();
     }
 
 	return (
 		<View style={styles.container}>
-			<View style={{ flexDirection: 'row', gap: 5, alignItems: 'center' }}>
+			{logo &&<View style={{ flexDirection: 'row', gap: 5, alignItems: 'center' }}>
 				<LogoSVG/>
 				<Text style={styles.logoText}>ClearHelp</Text>
-			</View>
+			</View>}
 			<TouchableOpacity style={styles.btn} onPress={leave}>
 				<Logo name="call" color="white" size={18} />
 				<Text style={styles.btnText}>EMERGENCY</Text>
@@ -43,6 +43,7 @@ const styles = StyleSheet.create({
         gap: 10,
         shadowOffset: { width: 0, height: 4 },
 		shadowOpacity: 0.25,
+        marginLeft: 'auto'
     },
     btnText: {
         fontFamily: "SourceBold",
