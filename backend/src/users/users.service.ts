@@ -65,39 +65,55 @@ export class UsersService implements AuthDataSource {
 					token: randomBytes(32).toString('hex'),
 					fihrId,
 					prescriptions: {
-						create: prescriptions.map((prescription): Prisma.PrescriptionCreateWithoutUserInput => {
-							const [dose] = prescription.resource.dosage;
-							const parts = dose.text.split(' ');
+						create: await Promise.all(
+							prescriptions
+								.map(async (prescription): Promise<Prisma.PrescriptionCreateWithoutUserInput> => {
+									const [dose] = prescription.resource.dosage;
+									const parts = dose.text.split(' ');
 
-							let dosage, vector, timing;
+									let dosage, vector, timing;
 
-							if (parts.length > 2) {
-								[dosage, vector, ...timing] = parts;
+									if (parts.length > 2) {
+										[dosage, vector, ...timing] = parts;
 
-								dosage = dosage === 'once' ? 1 : Number(dosage);
-								timing = timing.join(' ');
-								if (timing.includes('hours') || timing.includes('daily')) timing = null;
-							} else {
-								dosage = 1;
-								vector = null;
-								timing = null;
-							}
+										dosage = dosage === 'once' ? 1 : Number(dosage);
+										timing = timing.join(' ');
+										if (timing.includes('hours') || timing.includes('daily')) timing = null;
+									} else {
+										dosage = 1;
+										vector = null;
+										timing = null;
+									}
 
-							return {
-								medication: prescription.resource.medicationCodeableConcept.coding[0].display
-									.split(' ')
-									.map((word) => word[0].toUpperCase() + word.slice(1))
-									.join(' '),
-								dosage,
-								vector,
-								timing,
-								freq: dose.timing.repeat.frequency,
-								period: dose.timing.repeat.period,
-								periodUnit: dose.timing.repeat.periodUnit,
-								takenToday: 0,
-								lastTaken: null
-							};
-						})
+									const medication = prescription.resource.medicationCodeableConcept.coding[0].display
+										.split(' ')
+										.map((word) => word[0].toUpperCase() + word.slice(1))
+										.join(' ');
+
+									return {
+										medication,
+										description: await this.ai.describe(medication),
+										dosage,
+										vector,
+										timing,
+										freq: dose.timing.repeat.frequency,
+										period: dose.timing.repeat.period,
+										periodUnit: dose.timing.repeat.periodUnit,
+										takenToday: 0,
+										lastTaken: null
+									};
+								})
+								.concat({
+									medication: 'Snake Oil',
+									description: 'High quality snake oil',
+									dosage: 1,
+									freq: 2,
+									period: 1,
+									periodUnit: 'h',
+									takenToday: 0,
+									lastTaken: null
+								})
+						)
 					},
 					procedures: { create: await this._explain(plan.activity) }
 				},

@@ -18,6 +18,15 @@ export class AIService {
 			.then((res) => res.text!);
 	}
 
+	public async describe(medication: string): Promise<string> {
+		return this.ai.models
+			.generateContent({
+				model: 'gemini-2.0-flash',
+				contents: `Describe the medication "${medication}" in simple terms in 50 words or less`
+			})
+			.then((res) => res.text!);
+	}
+
 	public async translate(language: string, text: string): Promise<string> {
 		return this.ai.models
 			.generateContent({
