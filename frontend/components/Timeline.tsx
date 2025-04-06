@@ -54,7 +54,6 @@ export default DiagnosisTimeline;
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		padding: 20,
-		paddingLeft: 0,
+		paddingVertical: 20,
 	},
 });

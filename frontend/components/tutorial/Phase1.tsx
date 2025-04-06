@@ -19,7 +19,7 @@ const Phase1: React.FC<TutorialPhaseProps> = ({ next }) => {
 							<Text style={styles.sectionTitle}>Ready to Take</Text>
 						</View>
 						<View style={{ gap: 20, marginBottom: 20 }}>
-							<TouchableWithoutFeedback style={{ zIndex: 2, position: 'relative' }}>
+							<TouchableWithoutFeedback style={{ zIndex: 2 }}>
 								<MedicineCard
 									inspect={next}
 									prescription={{
@@ -32,7 +32,7 @@ const Phase1: React.FC<TutorialPhaseProps> = ({ next }) => {
 										period: 1,
 										periodUnit: 'd',
 										takenToday: 0,
-										lastTaken: null
+										lastTaken: null,
 									}}
 								/>
 							</TouchableWithoutFeedback>
@@ -48,7 +48,7 @@ const Phase1: React.FC<TutorialPhaseProps> = ({ next }) => {
 					top: 0,
 					left: 0,
 					zIndex: 1,
-					backgroundColor: 'rgba(0, 0, 0, 0.6)'
+					backgroundColor: 'rgba(0, 0, 0, 0.6)',
 				}}
 			/>
 		</ImageBackground>
@@ -63,18 +63,16 @@ const styles = StyleSheet.create({
 		flex: 1,
 		position: 'relative',
 		zIndex: 0,
-		height: '100%',
-		width: '100%'
 	},
 	blurContainer: {
 		padding: 20,
 		borderRadius: 10,
-		overflow: 'hidden'
+		overflow: 'hidden',
 	},
 	sectionTitle: {
 		color: 'white',
 		fontFamily: 'SourceSemibold',
-		fontSize: 20
+		fontSize: 20,
 	},
 	titleContainer: {
 		backgroundColor: '#544FB1',
@@ -85,7 +83,6 @@ const styles = StyleSheet.create({
 		alignSelf: 'flex-start',
 		flexDirection: 'row',
 		alignItems: 'center',
-		gap: 8
-	}
+		gap: 8,
+	},
 });
-

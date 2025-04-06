@@ -8,9 +8,13 @@ import { global } from '@/lib/context';
 import { useRouter } from 'expo-router';
 import { DateTime } from 'luxon';
 import React, { useContext, useEffect, useState } from 'react';
-import { ImageBackground, SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { FlatList, ImageBackground, SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { default as calendar, default as ReactNativeCalendarEvents } from 'react-native-calendar-events';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { Dimensions } from 'react-native';
+import PriorityCard2 from '@/components/PriorityCard2';
+
+const width = Dimensions.get('window').width;
 
 export default function Home() {
 	const router = useRouter();
@@ -51,7 +55,15 @@ export default function Home() {
 				<TopBar />
 				<KeyboardAwareScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ padding: 20, paddingBottom: 80 }}>
 					<Title>Today's Meds</Title>
-                    <PriorityCard/>
+					<ScrollView
+						horizontal={true}
+						showsHorizontalScrollIndicator={false}
+						style={{ display: 'flex', paddingVertical: 10, width: width }}
+						contentContainerStyle={{ gap: 20, paddingRight: 40 }}
+					>
+						<PriorityCard2 />
+						<PriorityCard />
+					</ScrollView>
 					{user?.prescriptions[0] && user?.prescriptions[0].length > 0 && (
 						<View style={{ gap: 10 }}>
 							<View style={styles.titleContainer}>
@@ -82,11 +94,11 @@ export default function Home() {
 					)}
 					{user?.prescriptions[2] && user?.prescriptions[2].length > 0 && (
 						<View style={{ gap: 10 }}>
-                            <View style={styles.titleContainer}>
+							<View style={styles.titleContainer}>
 								<Clock color="white" />
 								<Text style={styles.sectionTitle}>Finished</Text>
 							</View>
-							
+
 							<View style={{ gap: 20 }}>
 								{user?.prescriptions[2].map((prescription, i) => (
 									<MedicineCard key={i} prescription={prescription} />
@@ -106,17 +118,17 @@ export default function Home() {
 const styles = StyleSheet.create({
 	container: {
 		display: 'flex',
-		flex: 1
+		flex: 1,
 	},
 	blurContainer: {
 		padding: 20,
 		borderRadius: 10,
-		overflow: 'hidden'
+		overflow: 'hidden',
 	},
 	sectionTitle: {
 		color: 'white',
 		fontFamily: 'SourceSemibold',
-		fontSize: 20
+		fontSize: 20,
 	},
 	titleContainer: {
 		backgroundColor: '#544FB1',
@@ -127,7 +139,6 @@ const styles = StyleSheet.create({
 		alignSelf: 'flex-start',
 		flexDirection: 'row',
 		alignItems: 'center',
-		gap: 8
-	}
+		gap: 8,
+	},
 });
-

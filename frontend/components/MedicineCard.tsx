@@ -129,7 +129,7 @@ const styles = StyleSheet.create({
 		shadowOffset: { width: 0, height: 3 },
 		shadowRadius: 5,
 		shadowOpacity: 0.25,
-		shadowColor: '#6C63FF'
+		shadowColor: '#6C63FF',
 	},
 	name: {
 		fontFamily: 'SourceSemibold',

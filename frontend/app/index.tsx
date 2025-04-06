@@ -29,7 +29,7 @@ export default function Landing() {
 					<View style={{ gap: 50, justifyContent: 'flex-end', height: '100%' }}>
 						<View style={{ gap: 5, alignItems: 'center' }}>
 							<HomeLogo></HomeLogo>
-							<Text style={styles.title}>ClearHelp</Text>
+							<Text style={styles.title}>medIQ</Text>
 							<Text style={styles.description}>All the help you need is just one tap away</Text>
 						</View>
 						<View style={{ gap: 15 }}>

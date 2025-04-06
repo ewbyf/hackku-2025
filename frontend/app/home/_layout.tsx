@@ -18,6 +18,9 @@ export default function HomeLayout() {
 				name="index"
 				options={{
 					title: 'Home',
+                    tabBarLabelStyle: {
+                        fontSize: 13,
+                      },
 					tabBarIcon: ({ focused }: { focused: boolean }) => (
 						<Ionicons name={focused ? 'home' : 'home-outline'} color={focused ? '#6C63FF' : '#787878'} size={24} />
 					)
@@ -27,6 +30,9 @@ export default function HomeLayout() {
 				name="history"
 				options={{
 					title: 'Journey',
+                    tabBarLabelStyle: {
+                        fontSize: 13,
+                      },
 					tabBarIcon: ({ focused }: { focused: boolean }) => (
 						<Ionicons name={focused ? 'walk' : 'walk-outline'} color={focused ? '#6C63FF' : '#787878'} size={24} />
 					)
@@ -36,6 +42,9 @@ export default function HomeLayout() {
 				name="documents"
 				options={{
 					title: 'Records',
+                    tabBarLabelStyle: {
+                        fontSize: 13,
+                      },
 					tabBarIcon: ({ focused }: { focused: boolean }) => (
 						<Ionicons name={focused ? 'document-text' : 'document-text-outline'} color={focused ? '#6C63FF' : '#787878'} size={24} />
 					)

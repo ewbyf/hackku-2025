@@ -14,34 +14,48 @@ export default function HomeLayout() {
 				screenOptions={{
 					headerShown: false,
 					tabBarActiveTintColor: '#9D8FFF',
-					tabBarInactiveTintColor: '#A0A0A0'
-				}}>
+					tabBarInactiveTintColor: '#A0A0A0',
+					tabBarStyle: {
+						paddingTop: 5,
+						shadowOffset: { width: 0, height: 4 },
+						shadowOpacity: 0.25,
+					},
+				}}
+			>
 				<Tabs.Screen
 					name="index"
 					options={{
 						title: 'Home',
+						tabBarLabelStyle: {
+							fontSize: 13,
+						},
 						tabBarButton: (props: any) => <TouchableOpacity {...props} disabled={targetTab !== 'index'} />,
-						tabBarIcon: ({ color, size }: BottomTabBarIconProps) => <Ionicons name="home-outline" color={color} size={size} />
+						tabBarIcon: ({ color, size }: BottomTabBarIconProps) => <Ionicons name="home-outline" color={color} size={24} />,
 					}}
 				/>
 				<Tabs.Screen
 					name="history"
 					options={{
 						title: 'Journey',
+						tabBarLabelStyle: {
+							fontSize: 13,
+						},
 						tabBarButton: (props: any) => <TouchableOpacity {...props} disabled={targetTab !== 'history'} />,
-						tabBarIcon: ({ color, size }: BottomTabBarIconProps) => <Ionicons name="walk-outline" color={color} size={size} />
+						tabBarIcon: ({ color, size }: BottomTabBarIconProps) => <Ionicons name="walk-outline" color={color} size={24} />,
 					}}
 				/>
 				<Tabs.Screen
 					name="documents"
 					options={{
 						title: 'Records',
+						tabBarLabelStyle: {
+							fontSize: 13,
+						},
 						tabBarButton: (props: any) => <TouchableOpacity {...props} disabled={targetTab !== 'documents'} />,
-						tabBarIcon: ({ color, size }: BottomTabBarIconProps) => <Ionicons name="document-text-outline" color={color} size={size} />
+						tabBarIcon: ({ color, size }: BottomTabBarIconProps) => <Ionicons name="document-text-outline" color={color} size={24} />,
 					}}
 				/>
 			</Tabs>
 		</tutorial.Provider>
 	);
 }
-

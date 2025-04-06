@@ -3,8 +3,8 @@ import { View, StyleSheet, Text } from 'react-native';
 const PriorityCard = () => {
 	return (
 		<View style={styles.priorityCard}>
-			<Text style={styles.priorityTitle}>Reminder</Text>
-            <Text>You have a doctor's appointment in 4 days.</Text>
+			<Text style={styles.priorityTitle}>IMPORTANT</Text>
+            <Text style={styles.priorityTxt}>You have a doctor's appointment in <Text style={{fontFamily: "SourceBold"}}>4 days</Text>. All details are located in your journey.</Text>
 		</View>
 	);
 };
@@ -16,16 +16,20 @@ const styles = StyleSheet.create({
 		gap: 5,
 		paddingHorizontal: 15,
 		paddingVertical: 12,
-		backgroundColor: 'white',
+		backgroundColor: '#FFFCDD',
 		borderRadius: 15,
 		shadowOffset: { width: 0, height: 3 },
 		shadowRadius: 5,
 		shadowOpacity: 0.25,
-		shadowColor: '#6C63FF'
+		shadowColor: '#6C63FF',
+        width: 300,
     },
 	priorityTitle: {
-        fontFamily: 'SourceSemibold',
-		fontSize: 20,
-		lineHeight: 20
+        fontFamily: 'SourceBold',
+		fontSize: 22,
     },
+    priorityTxt: {
+        fontFamily: 'Source',
+		fontSize: 18,
+    }
 });

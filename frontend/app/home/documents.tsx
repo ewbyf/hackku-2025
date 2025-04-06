@@ -6,7 +6,7 @@ import { global } from '@/lib/context';
 import { Redirect, useRouter } from 'expo-router';
 import { speak } from 'expo-speech';
 import { useContext, useState } from 'react';
-import { SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { SafeAreaView, StyleSheet, Text, TouchableOpacity, View, ImageBackground } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import SelectDropdown from 'react-native-select-dropdown';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -20,88 +20,92 @@ export default function Documents() {
 	if (!user) return <Redirect href="/" />;
 
 	return (
-		<SafeAreaView style={styles.container}>
-			<TopBar />
-			<KeyboardAwareScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ padding: 20 }}>
-				<Title>Medical Records</Title>
-				<View style={styles.list}>
-					{user.procedures.map((proc, i) => (
-						<AccordionItem
-							short={
-								<Text style={styles.summary} numberOfLines={1} minimumFontScale={0.66} adjustsFontSizeToFit allowFontScaling>
-									{proc.explanation.technical}
-								</Text>
-							}
-							opened={selected === i}
-							onOpened={() => setSelected(i)}
-							onClosed={() => setSelected(null)}
-							key={i}>
-							<Text style={styles.details}>{proc.explanation.explanation}</Text>
-							<View style={styles.tts}>
-								<SelectDropdown
-									data={['English', 'Spanish']}
-									defaultValue="English"
-									onSelect={setLanguage}
-									dropdownStyle={{ backgroundColor: 'transparent' }}
-									renderButton={(language, open) => (
-										<View style={{ ...styles.dropdown, ...(open ? styles.open : {}) }}>
-											<Text style={{ fontSize: 18, color: 'black' }}>{language}</Text>
-											<Icon name={open ? 'chevron-up' : 'chevron-down'} size={16} />
-										</View>
-									)}
-									renderItem={(language, i, selected) => (
-										<View style={{ ...styles.dropdownItem, ...(i === 0 ? styles.dropdownItemLast : {}) }}>
-											{selected && <Icon name="checkmark-outline" size={16} />}
-											<Text style={{ fontSize: 18, color: 'black' }}>{language}</Text>
-										</View>
-									)}
-								/>
-								<TouchableOpacity
-									style={styles.btn}
-									onPress={() =>
-										language === 'English'
-											? speak(proc.explanation.explanation, { language: 'en' })
-											: api
-													.get(`/translate?language=Spanish&text=${proc.explanation.explanation}`)
-													.then((res) => speak(res.data, { language: 'es-419' }))
-									}>
-									<Text style={{ color: 'white', fontSize: 18 }}>Listen</Text>
-								</TouchableOpacity>
-							</View>
-						</AccordionItem>
-					))}
-				</View>
-			</KeyboardAwareScrollView>
-		</SafeAreaView>
+		<ImageBackground source={require('../../assets/images/bg.png')} imageStyle={{ resizeMode: 'cover' }} style={{ height: '100%', width: '100%' }}>
+			<SafeAreaView style={styles.container}>
+				<TopBar />
+				<KeyboardAwareScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ padding: 20 }}>
+					<Title>Medical Records</Title>
+					<View style={styles.list}>
+						{user.procedures.map((proc, i) => (
+							<AccordionItem
+								short={
+									<Text style={styles.summary} numberOfLines={1} minimumFontScale={0.66} adjustsFontSizeToFit allowFontScaling>
+										{proc.explanation.technical}
+									</Text>
+								}
+								opened={selected === i}
+								onOpened={() => setSelected(i)}
+								onClosed={() => setSelected(null)}
+								key={i}
+							>
+								<Text style={styles.details}>{proc.explanation.explanation}</Text>
+								<View style={styles.tts}>
+									<SelectDropdown
+										data={['English', 'Spanish']}
+										defaultValue="English"
+										onSelect={setLanguage}
+										dropdownStyle={{ backgroundColor: 'transparent' }}
+										renderButton={(language, open) => (
+											<View style={{ ...styles.dropdown, ...(open ? styles.open : {}) }}>
+												<Text style={{ fontSize: 18, color: 'black' }}>{language}</Text>
+												<Icon name={open ? 'chevron-up' : 'chevron-down'} size={16} />
+											</View>
+										)}
+										renderItem={(language, i, selected) => (
+											<View style={{ ...styles.dropdownItem, ...(i === 0 ? styles.dropdownItemLast : {}) }}>
+												{selected && <Icon name="checkmark-outline" size={16} />}
+												<Text style={{ fontSize: 18, color: 'black' }}>{language}</Text>
+											</View>
+										)}
+									/>
+									<TouchableOpacity
+										style={styles.btn}
+										onPress={() =>
+											language === 'English'
+												? speak(proc.explanation.explanation, { language: 'en' })
+												: api
+														.get(`/translate?language=Spanish&text=${proc.explanation.explanation}`)
+														.then((res) => speak(res.data, { language: 'es-419' }))
+										}
+									>
+										<Text style={{ color: 'white', fontSize: 18 }}>Listen</Text>
+									</TouchableOpacity>
+								</View>
+							</AccordionItem>
+						))}
+					</View>
+				</KeyboardAwareScrollView>
+			</SafeAreaView>
+		</ImageBackground>
 	);
 }
 
 const styles = StyleSheet.create({
 	container: {
 		display: 'flex',
-		flex: 1
+		flex: 1,
 	},
 	summary: {
 		color: 'white',
 		fontSize: 24,
 		textOverflow: 'ellipsis',
 		overflow: 'hidden',
-		maxWidth: 250
+		maxWidth: 250,
 	},
 	list: {
 		display: 'flex',
 		flexDirection: 'column',
-		gap: 10
+		gap: 10,
 	},
 	details: {
 		fontSize: 18,
-		lineHeight: 24
+		lineHeight: 24,
 	},
 	tts: {
 		display: 'flex',
 		flexDirection: 'row',
 		justifyContent: 'space-between',
-		gap: 16
+		gap: 16,
 	},
 	btn: {
 		backgroundColor: '#6C63FF',
@@ -109,7 +113,7 @@ const styles = StyleSheet.create({
 		paddingBottom: 12,
 		paddingLeft: 24,
 		paddingRight: 24,
-		borderRadius: 20
+		borderRadius: 20,
 	},
 	dropdown: {
 		display: 'flex',
@@ -123,7 +127,7 @@ const styles = StyleSheet.create({
 		paddingTop: 12,
 		paddingBottom: 12,
 		paddingLeft: 24,
-		paddingRight: 24
+		paddingRight: 24,
 	},
 	dropdownItem: {
 		display: 'flex',
@@ -134,15 +138,14 @@ const styles = StyleSheet.create({
 		paddingTop: 12,
 		paddingBottom: 12,
 		paddingLeft: 24,
-		paddingRight: 24
+		paddingRight: 24,
 	},
 	dropdownItemLast: {
 		borderTopLeftRadius: 16,
-		borderTopRightRadius: 16
+		borderTopRightRadius: 16,
 	},
 	open: {
 		borderTopLeftRadius: 0,
-		borderTopRightRadius: 0
-	}
+		borderTopRightRadius: 0,
+	},
 });
-

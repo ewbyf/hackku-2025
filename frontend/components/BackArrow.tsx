@@ -16,7 +16,7 @@ const BackArrow = () => {
 
 	return (
 		<TouchableOpacity style={styles.container} onPress={goBack}>
-			<Icon name="chevron-back-outline" color={'white'} size={36}></Icon>
+			<Icon name="chevron-back-outline" color={'white'} size={25}></Icon>
             <Text style={styles.title}>Go back</Text>
 		</TouchableOpacity>
 	);
