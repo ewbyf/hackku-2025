@@ -8,6 +8,7 @@ import api from '@/lib/axiosConfig';
 import { global } from '@/lib/context';
 import SignUpSvg from '@/components/svgs/SignUpSvg';
 import React from 'react';
+import { ActivityIndicator } from 'react-native';
 
 export default function SignUp() {
 	const router = useRouter();
@@ -15,25 +16,28 @@ export default function SignUp() {
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 	const [confirmPassword, setConfirmPassword] = useState('');
+    const [loading, setLoading] = useState(false);
 
 	const { updateUser } = useContext(global);
 
 	const handleSignUp = async () => {
 		if (password == confirmPassword) {
+            setLoading(true);
 			api.post('/register', {
 				// name,
 				email,
 				password,
 			})
 				.then((res) => {
+					router.replace('/onboarding')
 					const data = res.data;
 
 					login(data.token);
 					updateUser();
-					router.replace('/home'); // TODO: change to put this above everything but we make it route to onboarding
 				})
 				.catch((err) => {
 					console.log(err);
+                    setLoading(false)
 				});
 		}
 	};
@@ -99,8 +103,9 @@ export default function SignUp() {
 								></TextInput>
 							</View>
 
-							<TouchableOpacity style={styles.btn} onPress={handleSignUp}>
-								<Text style={styles.btnText}>Create your account</Text>
+							<TouchableOpacity style={styles.btn} onPress={handleSignUp} disabled={loading}>
+								{!loading && <Text style={styles.btnText}>Create your account</Text>}
+                                {loading && <ActivityIndicator color={"#6C63FF"}/>}
 							</TouchableOpacity>
 							<Text style={styles.swapLabel}>
 								Already have an account?{' '}

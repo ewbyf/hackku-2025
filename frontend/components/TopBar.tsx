@@ -2,10 +2,13 @@ import { View, Text, Button, StyleSheet, TouchableOpacity } from 'react-native';
 import Logo from 'react-native-vector-icons/Ionicons';
 import LogoSVG from './svgs/Logo';
 import { logout } from '@/lib/auth';
+import { useRouter } from 'expo-router';
 
 const TopBar = ({ logo }: { logo?: boolean }) => {
+    const router = useRouter();
 	const leave = async () => {
 		await logout();
+        router.replace('/')
 	};
 
 	return (

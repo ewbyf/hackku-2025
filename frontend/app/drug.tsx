@@ -102,7 +102,7 @@ export default function ExtraScreen() {
 							)}
 						</View>
 
-						<Text style={styles.description}></Text>
+						<Text style={styles.description}>{prescription.description}</Text>
 					</View>
 
 					<View style={{ gap: 10 }}>
@@ -165,7 +165,7 @@ const styles = StyleSheet.create({
 	},
 	description: {
 		fontFamily: 'Source',
-		fontSize: 20,
+		fontSize: 22,
 	},
 	take: {
 		fontFamily: 'SourceBold',

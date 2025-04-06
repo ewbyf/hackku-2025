@@ -1,5 +1,6 @@
+import { useRouter } from 'expo-router';
 import React, { useState } from 'react';
-import { StyleSheet, Text, TouchableOpacity, TouchableWithoutFeedback, View } from 'react-native';
+import { SafeAreaView, StyleSheet, Text, TouchableOpacity, TouchableWithoutFeedback, View } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 interface ModalProps {
@@ -10,33 +11,39 @@ interface ModalProps {
 
 const Modal: React.FC<ModalProps> = ({ open, phases, onClose }) => {
 	const [phase, setPhase] = useState<number>(0);
+    const router = useRouter();
 
 	return (
 		open && (
 			<View style={styles.backdrop}>
 				<View style={{ height: '100%', display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
-					<View style={styles.body}>
-						<TouchableOpacity style={styles.btn} onPress={onClose}>
+					<SafeAreaView style={styles.body}>
+						{/* <TouchableOpacity style={styles.btn} onPress={onClose}>
 							<Text style={styles.btnText}>Skip</Text>
-						</TouchableOpacity>
+						</TouchableOpacity> */}
 						{phases[phase]}
 						<View style={styles.controls}>
 							{phase === 0 ? (
 								<View />
 							) : (
-								<TouchableWithoutFeedback onPress={() => setPhase((phase) => phase - 1)}>
-									<Icon name="chevron-back-outline" size={48} />
-								</TouchableWithoutFeedback>
+								<TouchableOpacity onPress={() => setPhase((phase) => phase - 1)} style={styles.btn}>
+									<Icon name="chevron-back-outline" size={22} color="#6C63FF" style={{marginLeft: -10}}/>
+									<Text style={styles.btnText}>BACK</Text>
+								</TouchableOpacity>
 							)}
 							{phase === phases.length - 1 ? (
-								<View />
+								<TouchableOpacity onPress={() => router.replace('/home')} style={styles.btn}>
+                                <Text style={styles.btnText}>FINISH</Text>
+                                <Icon name="chevron-forward-outline" size={22} color="#6C63FF" style={{marginRight: -10}} />
+                            </TouchableOpacity>
 							) : (
-								<TouchableWithoutFeedback onPress={() => setPhase((phase) => phase + 1)}>
-									<Icon name="chevron-forward-outline" size={48} />
-								</TouchableWithoutFeedback>
+								<TouchableOpacity onPress={() => setPhase((phase) => phase + 1)} style={styles.btn}>
+									<Text style={styles.btnText}>NEXT</Text>
+									<Icon name="chevron-forward-outline" size={22} color="#6C63FF" style={{marginRight: -10}} />
+								</TouchableOpacity>
 							)}
 						</View>
-					</View>
+					</SafeAreaView>
 				</View>
 			</View>
 		)
@@ -56,7 +63,8 @@ const styles = StyleSheet.create({
 		left: 0,
 		display: 'flex',
 		flexDirection: 'column',
-		alignItems: 'center'
+		alignItems: 'center',
+		zIndex: 99,
 	},
 	controls: {
 		display: 'flex',
@@ -64,35 +72,32 @@ const styles = StyleSheet.create({
 		justifyContent: 'space-between',
 		position: 'absolute',
 		width: '100%',
-		top: '50%',
+		bottom: '0%',
+        paddingHorizontal: 20,
 		left: 0,
-		transform: 'translateY(-50%)'
+		transform: 'translateY(-50%)',
 	},
 	body: {
-		height: '80%',
-		width: '90%',
-		backgroundColor: 'white',
-		borderRadius: 12
+		height: '100%',
+		width: '100%',
+		backgroundColor: '#6C63FF',
+		borderRadius: 12,
 	},
 	btn: {
-		backgroundColor: '#6C63FF',
+		backgroundColor: 'white',
 		borderRadius: 10,
 		paddingVertical: 10,
-		paddingHorizontal: 15,
+		paddingHorizontal: 20,
 		flexDirection: 'row',
 		alignItems: 'center',
-		gap: 10,
+		gap: 3,
 		justifyContent: 'center',
 		shadowOffset: { width: 0, height: 4 },
 		shadowOpacity: 0.25,
-		position: 'absolute',
-		top: 0,
-		right: 0
 	},
 	btnText: {
-		color: 'white',
+		color: '#6C63FF',
 		fontFamily: 'SourceSemibold',
-		fontSize: 20
-	}
+		fontSize: 22
+	},
 });
-

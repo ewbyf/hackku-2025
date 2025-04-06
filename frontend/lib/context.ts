@@ -12,6 +12,7 @@ export interface Prescription {
 	periodUnit: string;
 	takenToday: number;
 	lastTaken: string | null;
+    description: string;
 }
 
 export interface ExplainedProcedure {

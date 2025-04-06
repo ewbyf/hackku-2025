@@ -10,7 +10,7 @@ import { global } from '@/lib/context';
 import { useRouter } from 'expo-router';
 import { DateTime } from 'luxon';
 import React, { useContext, useEffect, useState } from 'react';
-import { Dimensions, ImageBackground, SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Dimensions, ImageBackground, SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { default as calendar, default as ReactNativeCalendarEvents } from 'react-native-calendar-events';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -52,6 +52,7 @@ export default function Home() {
 
 	return (
 		<ImageBackground source={require('../../assets/images/bg.png')} imageStyle={{ resizeMode: 'cover' }} style={{ height: '100%', width: '100%' }}>
+            	{/* <Modal open onClose={() => {}} phases={[<Text>hi</Text>, <Text>hi</Text>, <Text>hi</Text>]} /> */}
 			<SafeAreaView style={styles.container}>
 				<TopBar />
 				<KeyboardAwareScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ padding: 20, paddingBottom: 80 }}>
@@ -60,7 +61,8 @@ export default function Home() {
 						horizontal={true}
 						showsHorizontalScrollIndicator={false}
 						style={{ display: 'flex', paddingVertical: 10, width: width }}
-						contentContainerStyle={{ gap: 20, paddingRight: 40 }}>
+						contentContainerStyle={{ gap: 20, paddingRight: 40 }}
+					>
 						<PriorityCard2 />
 						<PriorityCard />
 					</ScrollView>
@@ -106,9 +108,10 @@ export default function Home() {
 							</View>
 						</View>
 					)}
+                    <TouchableOpacity onPress={() => router.push('/onboarding')}><Text>aaaaa</Text></TouchableOpacity>
 				</KeyboardAwareScrollView>
 			</SafeAreaView>
-			<Modal open onClose={() => {}} phases={[<Text>hi</Text>, <Text>hi</Text>, <Text>hi</Text>]} />
+                    
 		</ImageBackground>
 	);
 }
@@ -116,17 +119,17 @@ export default function Home() {
 const styles = StyleSheet.create({
 	container: {
 		display: 'flex',
-		flex: 1
+		flex: 1,
 	},
 	blurContainer: {
 		padding: 20,
 		borderRadius: 10,
-		overflow: 'hidden'
+		overflow: 'hidden',
 	},
 	sectionTitle: {
 		color: 'white',
 		fontFamily: 'SourceSemibold',
-		fontSize: 20
+		fontSize: 20,
 	},
 	titleContainer: {
 		backgroundColor: '#544FB1',
@@ -137,7 +140,6 @@ const styles = StyleSheet.create({
 		alignSelf: 'flex-start',
 		flexDirection: 'row',
 		alignItems: 'center',
-		gap: 8
-	}
+		gap: 8,
+	},
 });
-
