@@ -22,22 +22,20 @@ const Phase1: React.FC<TutorialPhaseProps> = ({ next }) => {
 							<Text style={styles.sectionTitle}>Ready to Take</Text>
 						</View>
 						<View style={{ gap: 20, marginBottom: 20 }}>
-
 							<FocusedElement description="The home page displays your prescriptions.">
-
 								<MedicineCard
 									inspect={next}
 									prescription={{
 										id: '',
 										userId: '',
 										dosage: 1,
-										freq: 1,
+										freq: 3,
 										medication: 'Tylenol',
 										vector: 'tablet',
 										period: 1,
 										periodUnit: 'd',
 										takenToday: 0,
-										lastTaken: null,
+										lastTaken: null
 									}}
 								/>
 							</FocusedElement>
@@ -56,17 +54,17 @@ const styles = StyleSheet.create({
 		display: 'flex',
 		flex: 1,
 		position: 'relative',
-		zIndex: 0,
+		zIndex: 0
 	},
 	blurContainer: {
 		padding: 20,
 		borderRadius: 10,
-		overflow: 'hidden',
+		overflow: 'hidden'
 	},
 	sectionTitle: {
 		color: 'white',
 		fontFamily: 'SourceSemibold',
-		fontSize: 20,
+		fontSize: 20
 	},
 	titleContainer: {
 		backgroundColor: '#544FB1',
@@ -77,6 +75,7 @@ const styles = StyleSheet.create({
 		alignSelf: 'flex-start',
 		flexDirection: 'row',
 		alignItems: 'center',
-		gap: 8,
-	},
+		gap: 8
+	}
 });
+
