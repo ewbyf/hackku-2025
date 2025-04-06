@@ -1,19 +1,15 @@
-import { StyleSheet, TouchableOpacity, View, Text, TextInput, SafeAreaView, Button } from 'react-native';
-import Sun from 'react-native-vector-icons/Ionicons';
-import Fork from 'react-native-vector-icons/Ionicons';
-import Moon from 'react-native-vector-icons/Ionicons';
-import Icon from 'react-native-vector-icons/Ionicons';
-import { Prescription } from '@/lib/context';
-import React, { useContext, useEffect, useState } from 'react';
 import api from '@/lib/axiosConfig';
-import { global } from '@/lib/context';
+import { global, Prescription } from '@/lib/context';
 import { useRouter } from 'expo-router';
+import React, { useContext, useEffect, useState } from 'react';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import Icon from 'react-native-vector-icons/Ionicons';
 
-const MedicineCard = ({ prescription }: { prescription: Prescription }) => {
+const MedicineCard = ({ prescription, inspect }: { prescription: Prescription; inspect?: () => void }) => {
 	const { updateUser } = useContext(global);
 	const [time, setTime] = useState(0);
 
-    const router = useRouter();
+	const router = useRouter();
 
 	useEffect(() => {
 		if (prescription.lastTaken == null) return;
@@ -41,7 +37,7 @@ const MedicineCard = ({ prescription }: { prescription: Prescription }) => {
 
 	const takeMed = () => {
 		api.post('/take', {
-			prescriptionId: prescription.id,
+			prescriptionId: prescription.id
 		})
 			.then((resp) => {
 				console.log(resp);
@@ -55,13 +51,15 @@ const MedicineCard = ({ prescription }: { prescription: Prescription }) => {
 	return (
 		<TouchableOpacity
 			style={[styles.container, { opacity: prescription.freq - prescription.takenToday == 0 ? 0.5 : 1 }]}
-			onPress={() => router.push({
-                pathname: '/drug',
-                params: {
-                  id: prescription.id,
-                },
-              })} 
-		>
+			onPress={() =>
+				inspect ??
+				router.push({
+					pathname: '/drug',
+					params: {
+						id: prescription.id
+					}
+				})
+			}>
 			<View style={{ justifyContent: 'space-between', gap: 5 }}>
 				<View>
 					<Text style={styles.name} numberOfLines={2}>
@@ -92,10 +90,12 @@ const MedicineCard = ({ prescription }: { prescription: Prescription }) => {
 						></Moon>
 					</View>
 				</View> */}
-                	<Text style={[styles.interval, {alignSelf: 'flex-start', backgroundColor: '#FFE0FD', color: '#E732FF'}]}>
+				<Text style={[styles.interval, { alignSelf: 'flex-start', backgroundColor: '#FFE0FD', color: '#E732FF' }]}>
 					Every {prescription.period} {prescription.periodUnit === 'h' ? 'hour(s)' : 'day(s)'}
 				</Text>
-				<Text style={[styles.interval, { alignSelf: 'flex-start' }]}>{prescription.freq - prescription.takenToday}/{prescription.freq} dose(s) left to take</Text>
+				<Text style={[styles.interval, { alignSelf: 'flex-start' }]}>
+					{prescription.freq - prescription.takenToday}/{prescription.freq} dose(s) left to take
+				</Text>
 			</View>
 			<View style={{ justifyContent: 'space-between', gap: 10 }}>
 				{/* <Text style={styles.interval}>
@@ -125,7 +125,7 @@ const MedicineCard = ({ prescription }: { prescription: Prescription }) => {
 					</>
 				) : (
 					<>
-						<View style={[styles.btn, { shadowColor: 'rgba(0,0,0,0)', backgroundColor: '#6C63FF', opacity: .8 }]}>
+						<View style={[styles.btn, { shadowColor: 'rgba(0,0,0,0)', backgroundColor: '#6C63FF', opacity: 0.8 }]}>
 							<Text style={styles.btnText}>
 								{Math.floor((time / 3600) % 60) > 0 ? `${String(Math.floor((time / 3600) % 60)).padStart(1, '0')}:` : ''}
 								{String(Math.floor((time / 60) % 60)).padStart(2, '0')}:{String(time % 60).padStart(2, '0')}
@@ -155,36 +155,36 @@ const styles = StyleSheet.create({
 		backgroundColor: 'white',
 		borderRadius: 15,
 		shadowOffset: { width: 0, height: 3 },
-        shadowRadius: 5,
+		shadowRadius: 5,
 		shadowOpacity: 0.25,
-        shadowColor: '#6C63FF',
+		shadowColor: '#6C63FF'
 	},
 	name: {
 		fontFamily: 'SourceSemibold',
 		fontSize: 20,
 		maxWidth: 180,
-		lineHeight: 20,
+		lineHeight: 20
 	},
 	description: {
 		fontFamily: 'Source',
-		fontSize: 16,
+		fontSize: 16
 	},
 	take: {
 		fontFamily: 'SourceBold',
 		fontSize: 16,
-		color: '#787878',
+		color: '#787878'
 	},
 	sunActive: {
-		color: '#FFB94F',
+		color: '#FFB94F'
 	},
 	mealActive: {
-		color: '#8F9EB5',
+		color: '#8F9EB5'
 	},
 	moonActive: {
-		color: '#3867CC',
+		color: '#3867CC'
 	},
 	emojiInactive: {
-		color: '#CDCDCD',
+		color: '#CDCDCD'
 	},
 	interval: {
 		fontFamily: 'SourceSemibold',
@@ -193,7 +193,7 @@ const styles = StyleSheet.create({
 		paddingHorizontal: 12,
 		paddingVertical: 2,
 		borderRadius: 10,
-		alignSelf: 'flex-end',
+		alignSelf: 'flex-end'
 	},
 	btn: {
 		backgroundColor: '#6C63FF',
@@ -205,12 +205,12 @@ const styles = StyleSheet.create({
 		gap: 10,
 		justifyContent: 'center',
 		shadowOffset: { width: 0, height: 4 },
-		shadowOpacity: 0.25,
+		shadowOpacity: 0.25
 	},
 	btnText: {
 		color: 'white',
 		fontFamily: 'SourceSemibold',
-		fontSize: 20,
+		fontSize: 20
 	},
 	statusContainer: {
 		flexDirection: 'row',
@@ -220,12 +220,12 @@ const styles = StyleSheet.create({
 		backgroundColor: 'lightgreen',
 		paddingHorizontal: 12,
 		paddingVertical: 2,
-		borderRadius: 10,
+		borderRadius: 10
 	},
 	status: {
 		fontFamily: 'SourceSemibold',
 		fontSize: 14,
-		color: 'green',
+		color: 'green'
 	},
 	circle: {
 		borderRadius: '100%',
@@ -234,6 +234,7 @@ const styles = StyleSheet.create({
 		width: 17,
 		justifyContent: 'center',
 		alignItems: 'center',
-		overflow: 'visible',
-	},
+		overflow: 'visible'
+	}
 });
+
