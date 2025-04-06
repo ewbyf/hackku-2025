@@ -12,3 +12,7 @@ We're very proud of the amount of information that is condensed and summarized. 
 We learned how to query patient data from the HAPI FHIR api and how the system worked to query information such as patient condition. 
 ## What's next for medIQ
 medIQ has a lot of potential as a patient centered app with room to grow, with features that we thought of adding but having scopes too big to fit within the timeframe of a hackathon. Features such as, a clinical hotline for connecting patients to readily available healthcare workers working anywhere to help solve the manpower shortage through video chat, a live diagnostic timeline with addition of doctor's notes as well as summarization of the notes, and a ride share estimate to doctor's appointment.
+
+##How to run?
+npm i
+npx expo start --tunnel
