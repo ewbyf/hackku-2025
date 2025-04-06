@@ -15,12 +15,12 @@ export default Title;
 const styles = StyleSheet.create({
     txt: {
         fontFamily: 'SourceBold',
-        fontSize: 36,
+        fontSize: 42,
         color: '#6C63FF'
     },
     bar: {
         height: 6,
-        width: 55,
+        width: 70,
         backgroundColor: '#6C63FF'
     }
 });

@@ -50,7 +50,10 @@ const MedicineCard = ({ prescription }: { prescription: Prescription }) => {
 	};
 
 	return (
-		<TouchableOpacity style={styles.container}>
+		<TouchableOpacity
+			style={[styles.container, { opacity: prescription.freq - prescription.takenToday == 0 ? 0.5 : 1 }]}
+			disabled={prescription.freq - prescription.takenToday == 0}
+		>
 			<View style={{ justifyContent: 'space-between', gap: 0 }}>
 				<View>
 					<Text style={styles.name} numberOfLines={2}>
@@ -81,20 +84,28 @@ const MedicineCard = ({ prescription }: { prescription: Prescription }) => {
 						></Moon>
 					</View>
 				</View>
-				<Text style={[styles.interval, { alignSelf: 'flex-start' }]}>{prescription.freq} dose(s) left</Text>
+				<Text style={[styles.interval, { alignSelf: 'flex-start' }]}>{prescription.freq - prescription.takenToday} dose(s) left</Text>
 			</View>
 			<View style={{ justifyContent: 'space-between', gap: 10 }}>
 				<Text style={styles.interval}>
 					Every {prescription.period} {prescription.periodUnit === 'h' ? 'hour(s)' : 'day(s)'}
 				</Text>
-				{prescription.lastTaken === null ||
-				Date.now() - new Date(prescription.lastTaken).valueOf() >=
-					prescription.period * ((prescription.periodUnit == 'h' ? 3600 : (3600 * 24) / prescription.freq) * 1000) ? (
+				{prescription.freq - prescription.takenToday == 0 ? (
 					<>
-						<TouchableOpacity style={styles.btn} onPress={takeMed}>
+						<TouchableOpacity style={styles.btn} onPress={takeMed} disabled={prescription.freq - prescription.takenToday == 0}>
+							{prescription.freq - prescription.takenToday == 0 && <Text style={styles.btnText}>Done ✅</Text>}
+						</TouchableOpacity>
+						<View style={[styles.statusContainer, { backgroundColor: '#FFF8C9' }]}>
+							<Text style={[styles.status, { color: '#F9AE00' }]}>DONE FOR TODAY</Text>
+							<Icon name="happy-outline" size={16} color={'#F9AE00'}></Icon>
+						</View>
+					</>
+				) : prescription.lastTaken === null ||
+				  Date.now() - new Date(prescription.lastTaken).valueOf() >=
+						prescription.period * ((prescription.periodUnit == 'h' ? 3600 : (3600 * 24) / prescription.freq) * 1000) ? (
+					<>
+						<TouchableOpacity style={styles.btn} onPress={takeMed} disabled={prescription.freq - prescription.takenToday == 0}>
 							<Text style={styles.btnText}>I Took It 💊</Text>
-							{/* <View style={styles.circle}></View> */}
-							{/* <Icon name="checkmark" size={32} style={{ position: 'absolute', right: 8, borderColor: 'black' }} color={'#3BC23B'}></Icon> */}
 						</TouchableOpacity>
 						<View style={styles.statusContainer}>
 							<Text style={styles.status}>READY</Text>
@@ -103,13 +114,13 @@ const MedicineCard = ({ prescription }: { prescription: Prescription }) => {
 					</>
 				) : (
 					<>
-						<TouchableOpacity style={styles.btn} onPress={takeMed}>
+						<View style={[styles.btn, { shadowColor: 'rgba(0,0,0,0)', backgroundColor: '#6C63FF', opacity: .8 }]}>
 							<Text style={styles.btnText}>
 								{Math.floor((time / 3600) % 60) > 0 ? `${String(Math.floor((time / 3600) % 60)).padStart(1, '0')}:` : ''}
-								{String(Math.floor((time / 60) % 60)).padStart(1, '0')}:{String(time % 60).padStart(2, '0')}
+								{String(Math.floor((time / 60) % 60)).padStart(2, '0')}:{String(time % 60).padStart(2, '0')}
 							</Text>
 							{/* <Icon name="checkmark" size={32} style={{ position: 'absolute', right: 8, borderColor: 'black' }} color={'#3BC23B'}></Icon> */}
-						</TouchableOpacity>
+						</View>
 						<View style={[styles.statusContainer, { backgroundColor: '#FFCCCC' }]}>
 							<Text style={[styles.status, { color: 'red' }]}>NOT READY</Text>
 							<Icon name="close" size={16} color={'red'}></Icon>
@@ -132,15 +143,17 @@ const styles = StyleSheet.create({
 		paddingVertical: 12,
 		backgroundColor: 'white',
 		borderRadius: 15,
-		shadowOffset: { width: 0, height: 4 },
+		shadowOffset: { width: 0, height: 3 },
+        shadowRadius: 5,
 		shadowOpacity: 0.25,
+        shadowColor: '#6C63FF',
 		height: 150,
 	},
 	name: {
 		fontFamily: 'SourceSemibold',
 		fontSize: 20,
 		maxWidth: 180,
-        lineHeight: 20
+		lineHeight: 20,
 	},
 	description: {
 		fontFamily: 'Source',
@@ -181,6 +194,8 @@ const styles = StyleSheet.create({
 		alignItems: 'center',
 		gap: 10,
 		justifyContent: 'center',
+		shadowOffset: { width: 0, height: 4 },
+		shadowOpacity: 0.25,
 	},
 	btnText: {
 		color: 'white',

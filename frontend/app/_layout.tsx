@@ -7,6 +7,7 @@ import api from '@/lib/axiosConfig';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { useFonts } from 'expo-font';
 import 'react-native-reanimated';
+import { sortPrescriptions } from '@/lib/utils';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -41,6 +42,7 @@ export default function RootLayout() {
                 router.replace('/')
             });
 
+            user.prescriptions = sortPrescriptions(user.prescriptions)
 
 			setCtxState(user);
 		}
